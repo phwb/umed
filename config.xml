@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.ugraweb.u-med" version="0.0.1">
+    <name>U-Med</name>
+    <description>ОАО СМК Югория-Мед</description>
+    <author email="ugraweb@gmail.com" href="http://ugraweb.ru">Ugraweb Team</author>
+    <content src="index.html" />
+
+    <!--
+        If you do not want any permissions to be added to your app, add the
+        following tag to your config.xml; you will still have the INTERNET
+        permission on your app, which PhoneGap requires.
+    -->
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="portrait" />              <!-- all: possible values handset, tablet, or universal -->
+    <preference name="fullscreen" value="false" />                  <!-- all: hides the status bar at the top of the screen -->
+    <preference name="target-device" value="universal" />           <!-- ios: possible values are handset, tablet, or universal -->
+    <preference name="prerendered-icon" value="true" />             <!-- ios: this will cause iOS to not apply its gloss to the app's icon on the user's home screen -->
+    <preference name="detect-data-types" value="true" />            <!-- ios: controls whether certain data types (such as phone numbers and dates) are automatically turned into links by the system  -->
+    <preference name="exit-on-suspend" value="false" />             <!-- ios: if set to true, app will terminate when suspended, for example when home button is pressed -->
+    <preference name="android-minSdkVersion" value="14" />          <!-- android: minimum Android SDK version ~ Android 4.0, 4.0.1, 4.0.2 ICE_CREAM_SANDWICH -->
+    <preference name="android-installLocation" value="auto" />      <!-- android: where an app can be installed - defaults to internalOnly. auto or preferExternal allow the app to be installed on an SD card -->
+    <preference name="webviewbounce" value="true" />                <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
+    <preference name="stay-in-webview" value="false" />             <!-- ios: external links should open in the default browser, 'true' would use the webview the app lives in -->
+    <preference name="ios-statusbarstyle" value="black-opaque" />   <!-- ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar -->
+    <preference name="show-splash-screen-spinner" value="true" />   <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
+    <preference name="auto-hide-splash-screen" value="true" />      <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
+    <!--
+    <plugin name="org.apache.cordova.battery-status" />
+    <plugin name="org.apache.cordova.camera" />
+    <plugin name="org.apache.cordova.media-capture" />
+    <plugin name="org.apache.cordova.console" />
+    <plugin name="org.apache.cordova.contacts" />
+    <plugin name="org.apache.cordova.device" />
+    <plugin name="org.apache.cordova.device-motion" />
+    <plugin name="org.apache.cordova.device-orientation" />
+    <plugin name="org.apache.cordova.dialogs" />
+    <plugin name="org.apache.cordova.file" />
+    <plugin name="org.apache.cordova.file-transfer" />
+    <plugin name="org.apache.cordova.geolocation" />
+    <plugin name="org.apache.cordova.globalization" />
+    <plugin name="org.apache.cordova.inappbrowser" />
+    <plugin name="org.apache.cordova.media" />
+    <plugin name="org.apache.cordova.network-information" />
+    <plugin name="org.apache.cordova.splashscreen" />
+    <plugin name="org.apache.cordova.vibration" />
+    -->
+
+    <icon src="icon.png" />
+    <icon platform="android" qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
+    <icon platform="android" qualifier="mdpi" src="www/res/icon/android/icon-48-mdpi.png" />
+    <icon platform="android" qualifier="hdpi" src="www/res/icon/android/icon-72-hdpi.png" />
+    <icon platform="android" qualifier="xhdpi" src="www/res/icon/android/icon-96-xhdpi.png" />
+    <icon platform="ios" height="57" src="www/res/icon/ios/icon-57.png" width="57" />
+    <icon platform="ios" height="72" src="www/res/icon/ios/icon-72.png" width="72" />
+    <icon platform="ios" height="114" src="www/res/icon/ios/icon-57-2x.png" width="114" />
+    <icon platform="ios" height="144" src="www/res/icon/ios/icon-72-2x.png" width="144" />
+
+    <splash platform="android" qualifier="port-ldpi" src="www/res/screen/android/screen-ldpi-portrait.png" />
+    <splash platform="android" qualifier="port-mdpi" src="www/res/screen/android/screen-mdpi-portrait.png" />
+    <splash platform="android" qualifier="port-hdpi" src="www/res/screen/android/screen-hdpi-portrait.png" />
+    <splash platform="android" qualifier="port-xhdpi" src="www/res/screen/android/screen-xhdpi-portrait.png" />
+    <splash platform="ios" height="480" src="www/res/screen/ios/screen-iphone-portrait.png" width="320" />
+    <splash platform="ios" height="960" src="www/res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
+    <splash platform="ios" height="1136" src="www/res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
+    <splash platform="ios" height="1024" src="www/res/screen/ios/screen-ipad-portrait.png" width="768" />
+    <splash platform="ios" height="768" src="www/res/screen/ios/screen-ipad-landscape.png" width="1024" />
+
+    <access origin="*" />
+    <plugin name="cordova-plugin-whitelist" version="1" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+</widget>
