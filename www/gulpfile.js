@@ -17,7 +17,7 @@ gulp.task('rjs', function () {
         },
         paths: {
             requireLib: 'libs/require/require',
-            // сторонние библиотеки
+            // СЃС‚РѕСЂРѕРЅРЅРёРµ Р±РёР±Р»РёРѕС‚РµРєРё
             fastclick: 'libs/fastclick/fastclick',
             jquery: 'libs/jquery/jquery-2.1.4',
             underscore: 'libs/underscore/underscore',
@@ -25,9 +25,9 @@ gulp.task('rjs', function () {
             backboneLocalStorage: 'libs/backbone.localstorage/backbone.localStorage',
             backboneForm: 'libs/backbone.form/backbone-forms.min',
             text: 'libs/require/text',
-            // мои библиотеки
+            // РјРѕРё Р±РёР±Р»РёРѕС‚РµРєРё
             page: 'libs/pages/page',
-            // сокращения, чтоб постоянно не писать app
+            // СЃРѕРєСЂР°С‰РµРЅРёСЏ, С‡С‚РѕР± РїРѕСЃС‚РѕСЏРЅРЅРѕ РЅРµ РїРёСЃР°С‚СЊ app
             collections: 'app/collections',
             templates: 'app/templates',
             models: 'app/models',
