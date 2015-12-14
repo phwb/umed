@@ -1,5 +1,7 @@
 ### PhoneGap
 platforms/
+hooks/
+plugins/
 
 ### Windows template
 # Windows image file caches

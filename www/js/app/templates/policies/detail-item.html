@@ -1,0 +1,47 @@
+<div class="data-list">
+    <ul class="data-list__lst">
+        <li class="data-list__i">
+            <div class="data-list__value data-list__value_zebra"><%- fio %></div>
+            <div class="data-list__label label">ФИО</div>
+        </li>
+        <li class="data-list__i">
+            <div class="data-list__value"><%- _.template.formatDate(birthday) %> г.</div>
+            <div class="data-list__label label">Дата рождения</div>
+        </li>
+        <li class="data-list__i">
+            <div class="data-list__value"><%
+                switch (sex) {
+                    case 'M': %>мужской<% break;
+                    case 'F': %>женский<% break;
+                }
+                %></div>
+            <div class="data-list__label label">Пол</div>
+        </li>
+        <li class="data-list__i">
+            <div class="data-list__value"><%- enp %></div>
+            <div class="data-list__label label">Единый номер полиса</div>
+        </li>
+        <% if (blank !== undefined) { %>
+        <li class="data-list__i">
+            <div class="data-list__value data-list__value_important"><%- blank %></div>
+            <div class="data-list__label label">Номер бланка</div>
+        </li>
+        <% } %>
+        <li class="data-list__i">
+            <div class="data-list__value"><%- _.template.formatDate(date) %> г.</div>
+            <div class="data-list__label label">Срок действия</div>
+        </li>
+    </ul>
+</div>
+<div class="panel__controls controls">
+    <div class="controls__i control-button control-button_edit">
+        <svg class="control-button__icon">
+            <use xlink:href="#icon_edit"></use>
+        </svg>
+    </div>
+    <div class="controls__i control-button control-button_delete">
+        <svg class="control-button__icon">
+            <use xlink:href="#icon_delete"></use>
+        </svg>
+    </div>
+</div>
