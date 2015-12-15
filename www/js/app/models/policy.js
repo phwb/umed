@@ -4,10 +4,7 @@ define([
 ], function (Backbone) {
     'use strict';
 
-    // статусы:
-    //  NEW - только что созданый полис
-    //  APPROVED - подтвержден
-    var Policy = Backbone.Model.extend({
+    return Backbone.Model.extend({
         defaults: {
             fio: '',
             birthday: new Date(),
@@ -15,7 +12,7 @@ define([
             sex: '',
             number: 0,
             date: new Date(),
-            status: 'NEW'
+            status: 'Полис не проверен'
         },
         schema: {
             fio: {
@@ -66,6 +63,4 @@ define([
             }
         }
     });
-
-    return Policy;
 });

@@ -10,9 +10,9 @@ gulp.task('rjs', function () {
         baseUrl: './js',
         name: 'init',
         shim: {
-            backboneLocalStorage: {
+            storage: {
                 deps: ['backbone'],
-                exports: 'Store'
+                exports: 'Storage'
             }
         },
         paths: {
@@ -22,7 +22,7 @@ gulp.task('rjs', function () {
             jquery: 'libs/jquery/jquery-2.1.4',
             underscore: 'libs/underscore/underscore',
             backbone: 'libs/backbone/backbone',
-            backboneLocalStorage: 'libs/backbone.localstorage/backbone.localStorage',
+            storage: 'libs/backbone.localstorage/backbone.localStorage',
             backboneForm: 'libs/backbone.form/backbone-forms.min',
             text: 'libs/require/text',
             // мои библиотеки
@@ -38,7 +38,7 @@ gulp.task('rjs', function () {
     })
         .pipe(uglify())
         .pipe(rename(function (path) {
-            path.basename = 'build.min'
+            path.basename = 'build.min';
         }))
         .pipe(gulp.dest('./build/'));
 });

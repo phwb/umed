@@ -3,24 +3,11 @@ require.config({
     // remove after develop
     urlArgs: "v=" + (new Date()).getTime(),
     shim: {
-        underscore: {
-            exports: '_'
-        },
-        backbone: {
-            deps: [
-                'underscore',
-                'jquery'
-            ],
-            exports: 'Backbone'
-        },
-        backboneLocalStorage: {
+        store: {
             deps: [
                 'backbone'
             ],
             exports: 'Store'
-        },
-        crypto: {
-            exports: 'CryptoJS'
         }
     },
     paths: {
@@ -29,10 +16,9 @@ require.config({
         jquery: 'libs/jquery/jquery-2.1.4',
         underscore: 'libs/underscore/underscore',
         backbone: 'libs/backbone/backbone',
-        backboneLocalStorage: 'libs/backbone.localstorage/backbone.localStorage',
+        store: 'libs/backbone.localstorage/backbone.localStorage',
         backboneForm: 'libs/backbone.form/backbone-forms.min',
         text: 'libs/require/text',
-        crypto: 'libs/crypto/sha1',
         // мои библиотеки
         page: 'libs/pages/page',
         // сокращения, чтоб постоянно не писать app
@@ -47,20 +33,28 @@ require([
     'fastclick',
     'backbone',
     'page',
-    'collections/policies',
+    // главные вьюшки
     'views/main',
     'views/policies',
     'views/add',
-    'views/detail'
+    'views/detail',
+    'views/offices',
+    'views/info',
+    'views/hospital',
+    'views/regions'
 ], function (
     FastClick,
     Backbone,
     page,
-    Policies,
-    mainPage,
-    policiesPage,
-    formPage,
-    detailPage
+    // главные вьюшки
+    pageMain,
+    pagePolicies,
+    pageForm,
+    pageDetail,
+    pageOffices,
+    pageInfo,
+    pageHospital,
+    pageRegions
 ) {
     'use strict';
 
@@ -68,24 +62,24 @@ require([
     FastClick.attach(document.body);
 
     // page - вставляет в DOM страницы и анимирует их
-    page.add(mainPage);
+    page.add(pageMain);
 
     // роутором выступает собыитя бекбона
     // для навигации лучше бы использоваль бекбоновский router,
     // но я почему то решил использовать события
     Backbone.Events.on('action:policies', function () {
-        page.add(policiesPage);
+        page.add(pagePolicies);
     });
 
     Backbone.Events.on('action:form', function (id) {
-        formPage(id, function (error, formView) {
+        pageForm(id, function (error, formView) {
             page.add(formView);
         });
     });
 
     Backbone.Events.on('action:detail', function (id) {
         // используем нодовский подход, первый агрумент ошибка, потом все остальное
-        detailPage(id, function (error, detailView) {
+        pageDetail(id, function (error, detailView) {
             if (error !== undefined) {
                 // тут можно показать 404, но пока алерт
                 alert(error);
@@ -95,14 +89,19 @@ require([
         });
     });
 
-    // not realized yet
     Backbone.Events.on('action:info', function () {
-        alert('info page');
+        page.add(pageInfo);
     });
+
     Backbone.Events.on('action:hospital', function () {
-        alert('hospital page');
+        page.add(pageHospital);
     });
+
     Backbone.Events.on('action:offices', function () {
-        alert('offices page');
+        page.add(pageOffices);
+    });
+
+    Backbone.Events.on('region:select', function () {
+        page.add(pageRegions);
     });
 });

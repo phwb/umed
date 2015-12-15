@@ -25,16 +25,21 @@ define([
      * @constructor
      */
     function PageView(params) {
+        params = params || {};
         html = $('<div />').html(params.html || defaultHtml);
 
         this.Navbar = params.Navbar || {};
         this.Page = params.Page || {};
-        this.Toolbar = params.Toolbar || {};
+        this.Toolbar = _.extend({
+            show: true
+        }, params.Toolbar || {});
 
         return this;
     }
 
     PageView.prototype.init = function () {
+        var self = this;
+
         var Navbar = Backbone.View.extend(_.extend({
             className: 'page',
             initialize: function () {
@@ -42,6 +47,10 @@ define([
                     extraClass = navbar.attr('class').replace('navbar', '').trim();
 
                 this.$el.html(navbar.html()).addClass(extraClass);
+
+                if (!!self.Navbar.title) {
+                    this.$('.header__h').text(self.Navbar.title);
+                }
             }
         }, this.Navbar));
 

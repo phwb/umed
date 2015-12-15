@@ -64,8 +64,8 @@
     <splash platform="ios" height="1024" src="res/screen/ios/screen-ipad-portrait.png" width="768" />
     <splash platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
 
-    <access origin="*" />
     <plugin name="cordova-plugin-whitelist" />
+    <access origin="http://u-med.ru/local/api/*" />
 
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

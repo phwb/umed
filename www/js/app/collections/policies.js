@@ -1,9 +1,13 @@
 /*global define*/
 define([
     'backbone',
-    'backboneLocalStorage',
+    'store',
     'models/policy'
-], function (Backbone, Store, Policy) {
+], function (
+    Backbone,
+    Store,
+    Policy
+) {
     'use strict';
 
     var Policies = Backbone.Collection.extend({

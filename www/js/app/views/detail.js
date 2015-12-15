@@ -1,14 +1,12 @@
 /* global define, $, _ */
 define([
     'backbone',
-    'crypto',
     'collections/policies',
     'views/page',
     'text!templates/policies/detail.html',
     'text!templates/policies/detail-item.html'
 ], function (
     Backbone,
-    CryptoJS,
     Policies,
     PageView,
     detailPage,
@@ -42,11 +40,11 @@ define([
         }
     });
 
-    var checkSettings = {
-        salt: 'ajjvjdb(*hdsadsnasd80Y(T^(I90idasfj',
+    var defaultParams = {
         url: 'http://u-med.ru/local/api/policy/',
         method: 'GET',
-        type: 'json'
+        type: 'json',
+        crossDomain: true
     };
 
     // кеш детальных страниц, для предотвращения повторной генерации
@@ -102,15 +100,11 @@ define([
                             return this;
                         }
 
-                        params = {
-                            url: checkSettings.url,
-                            type: checkSettings.method,
-                            dataType: checkSettings.type,
-                            crossDomain: true,
+                        params = _.extend({}, defaultParams, {
                             data: {
                                 enp: enp
                             }
-                        };
+                        });
 
                         $.ajax(params)
                             .done(this.ajaxSuccess.bind(this))
@@ -120,6 +114,12 @@ define([
                         var key, item = {
                             success: false
                         };
+
+                        if (data === undefined) {
+                            alert('Произошла не известная ошибка! Попробуйте повторить запрос.');
+                            return this;
+                        }
+
                         if (data.success === true) {
                             for (key in data) {
                                 if (data.hasOwnProperty(key) && key !== 'success') {
@@ -130,7 +130,8 @@ define([
                                 }
                             }
                             if (item.success === true) {
-                                console.log(item);
+                                policy.set('status', item.text || 'Данные не проверены');
+                                policy.save();
                             }
                         }
                     },
