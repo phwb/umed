@@ -12,11 +12,13 @@
     <% _(props).each(function(item) { %>
         <div class="line">
             <div class="label"><%- item.name %>:</div>
+            <div class="value <%- item.code %>">
             <% if (!_(item.html).isEmpty()) { %>
                 <%= item.html %>
             <% } else { %>
                 <%= item.text %>
             <% } %>
+            </div>
         </div>
     <% }); %>
 <% } %>
