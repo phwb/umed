@@ -1,7 +1,6 @@
 /*global require, $, _*/
 require.config({
-    // remove after develop
-    urlArgs: "v=" + (new Date()).getTime(),
+    //urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
             deps: ['backbone'],

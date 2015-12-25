@@ -5,6 +5,7 @@
     <div class="label">Адрес:</div><%- address %>
 </div>
 <% } %>
+
 <% if (_(props).isArray() && !_(props).isEmpty()) { %>
     <% _(props).each(function(item) { %>
         <div class="line">
@@ -17,7 +18,9 @@
         </div>
     <% }); %>
 <% } %>
+
 <hr class="separator">
+
 <div class="line">
     <div class="label">График работы:</div>
     <div class="schedule">
@@ -51,6 +54,9 @@
         </div>
         <% } %>
         <% if (!!days.weekend) { %>
+    </div>
+    <div class="label">Выходной:</div>
+        <div class="schedule">
         <div class="schedule__i">
             <div class="schedule__days schedule__day_off"><%- days.weekend %></div>
         </div>

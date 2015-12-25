@@ -3,7 +3,13 @@
 var gulp = require('gulp'),
     rjs = require ('gulp-requirejs'),
     uglify = require('gulp-uglify'),
+    minifyCSS = require('gulp-minify-css'),
+    concat = require('gulp-concat'),
     rename = require('gulp-rename');
+
+var dist = {
+    root: './build/www/'
+};
 
 gulp.task('rjs', function () {
     rjs({
@@ -31,16 +37,76 @@ gulp.task('rjs', function () {
             collections: 'app/collections',
             templates: 'app/templates',
             models: 'app/models',
-            views: 'app/views'
+            views: 'app/views',
+            // динамически подлкючаемая часть в файле init.js
+            'views/policies': 'app/views/policies',
+            'views/policies-add': 'app/views/policies-add',
+            'views/policies-detail': 'app/views/policies-detail',
+            'views/policies-check': 'app/views/policies-check',
+            'views/info': 'app/views/info',
+            'views/info-detail': 'app/views/info-detail',
+            'views/hospital': 'app/views/hospital',
+            'views/hospital-detail': 'app/views/hospital-detail',
+            'views/offices': 'app/views/offices',
+            'views/offices-detail': 'app/views/offices-detail',
+            'views/regions': 'app/views/regions'
         },
-        include: ["requireLib"],
+        include: [
+            "requireLib",
+            // динамически подлкючаемая часть в файле init.js
+            'views/policies',
+            'views/policies-add',
+            'views/policies-detail',
+            'views/policies-check',
+            'views/info',
+            'views/info-detail',
+            'views/hospital',
+            'views/hospital-detail',
+            'views/offices',
+            'views/offices-detail',
+            'views/regions'
+        ],
         out: 'build.js'
     })
-        /*.pipe(uglify())
+        .pipe(uglify())
         .pipe(rename(function (path) {
             path.basename = 'build.min';
-        }))*/
-        .pipe(gulp.dest('./build/'));
+        }))
+        .pipe(gulp.dest(dist.root + 'js'));
 });
 
-gulp.task('default', ['rjs']);
+gulp.task('static', function () {
+    gulp.src(['./static/*']).pipe(gulp.dest(dist.root + 'static'));
+});
+
+gulp.task('upload', function () {
+    gulp.src(['./upload/*']).pipe(gulp.dest(dist.root + 'upload'));
+});
+
+gulp.task('img', function () {
+    gulp.src(['./img/*']).pipe(gulp.dest(dist.root + 'img'));
+});
+
+gulp.task('index', function () {
+    gulp.src(['./index.html']).pipe(gulp.dest(dist.root + 'index.html'));
+});
+
+gulp.task('css', function () {
+    // TODO: допилить CSS сжатие
+    var paths = [
+        './css/fonts.css',
+        './css/animations/move.css',
+        './css/animations/fade.css',
+        './css/common.css',
+        './css/style.css'
+    ];
+    gulp.src(paths)
+        .pipe(minifyCSS())
+        .pipe(rename(function(path) {
+            path.basename = path.basename + '.min';
+        }))
+        .pipe(concat('styles.min.css'))
+        .pipe(gulp.dest(dist.root + 'css'));
+});
+
+gulp.task('default', ['rjs', 'css', 'static', 'upload', 'img', 'index']);
