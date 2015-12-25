@@ -29,8 +29,11 @@ define([
         html = $('<div />').html(params.html || defaultHtml);
 
         this.Navbar = params.Navbar || {};
-        this.Page = params.Page || {};
+        this.Page = _.extend({
+            init: $.noop
+        }, params.Page || {});
         this.Toolbar = _.extend({
+            init: $.noop,
             show: true
         }, params.Toolbar || {});
 
@@ -56,10 +59,13 @@ define([
 
         var Page = Backbone.View.extend(_.extend({
             className: 'page',
-            init: function () {},
             initialize: function () {
                 var page = html.find('.content'),
                     extraClass = page.attr('class').replace('content', '').trim();
+
+                if (!!self.Page.cid) {
+                    this.cid = self.Page.cid;
+                }
 
                 this.$el
                     .html(page.html())
@@ -75,6 +81,8 @@ define([
             initialize: function () {
                 var toolbar = html.find('.toolbar');
                 this.$el.html(toolbar.html());
+
+                this.init.apply(this, arguments);
             }
         }, this.Toolbar));
 

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Что такое ОМС?",
+    "sort": 100,
+    "code": "what-oms"
+  },
+  {
+    "name": "Как получить полис ОМС",
+    "sort": 100,
+    "code": "get-policy"
+  },
+  {
+    "name": "Защита прав застрахованных",
+    "sort": 100,
+    "code": "protection-rights-insured"
+  },
+  {
+    "name": "Социальный выезд на дом",
+    "sort": 100,
+    "code": "social-leave-house"
+  },
+  {
+    "name": "SMS-информирование",
+    "sort": 100,
+    "code": "sms-informing"
+  },
+  {
+    "name": "Представительство в МФЦ",
+    "sort": 100,
+    "code": "representation-mfc"
+  },
+  {
+    "name": "Полис ОМС для работающих граждан",
+    "sort": 100,
+    "code": "business"
+  }
+]

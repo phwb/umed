@@ -1,0 +1,22 @@
+<h2 class="h1"><%- name %></h2>
+
+<hr class="separator">
+
+<% if (address.length) { %>
+<div class="line">
+    <div class="label">Адрес:</div><%- address %>
+</div>
+<% } %>
+
+<% if (_(props).isArray() && !_(props).isEmpty()) { %>
+    <% _(props).each(function(item) { %>
+        <div class="line">
+            <div class="label"><%- item.name %>:</div>
+            <% if (!_(item.html).isEmpty()) { %>
+                <%= item.html %>
+            <% } else { %>
+                <%= item.text %>
+            <% } %>
+        </div>
+    <% }); %>
+<% } %>

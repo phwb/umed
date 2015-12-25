@@ -47,7 +47,10 @@ define([
         },
         click: function (e) {
             var action = this.model.get('action');
+
+            Backbone.Events.trigger('action', action);
             Backbone.Events.trigger('action:' + action);
+
             e.preventDefault();
         },
         render: function () {
@@ -74,6 +77,7 @@ define([
     var pageView = new PageView({
         html: mainPage,
         Page: {
+            cid: 'main',
             render: function () {
                 var menu = new MenuList({collection: menuCollection});
                 this.$('#nav').html( menu.render().el );

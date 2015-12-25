@@ -1,0 +1,59 @@
+<h2 class="h1"><%- name %></h2>
+<hr class="separator">
+<% if (address.length) { %>
+<div class="line">
+    <div class="label">Адрес:</div><%- address %>
+</div>
+<% } %>
+<% if (_(props).isArray() && !_(props).isEmpty()) { %>
+    <% _(props).each(function(item) { %>
+        <div class="line">
+            <div class="label"><%- item.name %>:</div>
+            <% if (!_(item.html).isEmpty()) { %>
+                <%= item.html %>
+            <% } else { %>
+                <%= item.text %>
+            <% } %>
+        </div>
+    <% }); %>
+<% } %>
+<hr class="separator">
+<div class="line">
+    <div class="label">График работы:</div>
+    <div class="schedule">
+        <div class="schedule__i">
+            <div class="schedule__days">
+                <%- days.working %>
+            </div>
+            <div class="schedule__time">
+            <% if (_(hours.value).isArray() && !_(hours.value).isEmpty()) { %>
+                <div class="schedule__time-num schedule__time-num_right"><%- hours.value[0] %></div> -
+                <div class="schedule__time-num"><%- hours.value[1] %></div>
+            <% } %>
+            </div>
+        </div>
+        <% if (!!lunch) { %>
+        <div class="schedule__i">
+            <div class="schedule__days schedule__days_right">
+                <svg class="schedule__break">
+                    <use xlink:href="#icon_cup"></use>
+                </svg>
+            </div>
+            <div class="schedule__time">
+                <div class="schedule__time-num schedule__time-num_break schedule__time-num_right"><%- lunch.value[0] %></div> -
+                <div class="schedule__time-num schedule__time-num_break"><%- lunch.value[1] %></div>
+            </div>
+        </div>
+        <% } %>
+        <% if (!!days.extra) { %>
+        <div class="schedule__i schedule__i-extra">
+            <%= days.extra %>
+        </div>
+        <% } %>
+        <% if (!!days.weekend) { %>
+        <div class="schedule__i">
+            <div class="schedule__days schedule__day_off"><%- days.weekend %></div>
+        </div>
+        <% } %>
+    </div>
+</div>

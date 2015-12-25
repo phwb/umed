@@ -4,8 +4,12 @@
  */
 /*global define*/
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'app/helper/notify'
+], function (
+    $,
+    notify
+) {
     'use strict';
 
     var version = '0.0.1';
@@ -133,7 +137,7 @@ define([
 
     /**
      * Функция иницилизирует эффект слайда старниц.
-     * На вход можно подать любой родительский тег, по умолчанию #pages
+     * На вход можно подать любой родительский тег, по умолчанию .pages
      *
      * @param {Object} params
      * @constructor
@@ -160,7 +164,7 @@ define([
         try {
             init.apply(this);
         } catch (e) {
-            alert(e.message);
+            notify.alert(e.message);
         }
     }
 
@@ -170,6 +174,7 @@ define([
      */
     Pages.prototype.addPage = function ($page, callback) {
         var pageID, cache;
+        callback = callback || $.noop;
 
         if (!($page instanceof $)) {
             throw new Error('Need jQuery object');
@@ -187,6 +192,7 @@ define([
 
         if (this.$pages.length === 1) {
             $page.addClass(this._settings.currentPageClass);
+            callback();
         } else {
             this.next({
                 page: $page.data('page'),
@@ -198,7 +204,7 @@ define([
     Pages.prototype.next = function (params) {
         var effect, self = this,
             currentPage = null, nextPage = null,
-            page = params.page, callback = params.callback || $.noop();
+            page = params.page, callback = params.callback || $.noop;
 
         // ничего не делаем, если анимация в процессе
         if (this._settings.animationStart) {
@@ -211,6 +217,11 @@ define([
             return $(this).data('page') === page;
         });
         if (!nextPage.length) {
+            return this;
+        }
+        // если следующая страница и так иммет активный класс, то ничего не делаем
+        // срабатывает в случае если переход был из выезжающего меню
+        if (nextPage.hasClass(this._settings.currentPageClass)) {
             return this;
         }
 

@@ -4,9 +4,7 @@ require.config({
     urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
-            deps: [
-                'backbone'
-            ],
+            deps: ['backbone'],
             exports: 'Store'
         }
     },
@@ -33,75 +31,160 @@ require([
     'fastclick',
     'backbone',
     'page',
+    'app/helper/notify',
+    'app/helper/download',
     // главные вьюшки
-    'views/main',
-    'views/policies',
-    'views/add',
-    'views/detail',
-    'views/offices',
-    'views/info',
-    'views/hospital',
-    'views/regions'
+    'views/menu',
+    'views/main'
 ], function (
     FastClick,
     Backbone,
     page,
+    notify,
+    checkResources,
     // главные вьюшки
-    pageMain,
-    pagePolicies,
-    pageForm,
-    pageDetail,
-    pageOffices,
-    pageInfo,
-    pageHospital,
-    pageRegions
+    menu,
+    pageMain
 ) {
     'use strict';
 
     // init FastClick
     FastClick.attach(document.body);
 
-    // page - вставляет в DOM страницы и анимирует их
-    page.add(pageMain);
-
-    // роутором выступает собыитя бекбона
-    // для навигации лучше бы использоваль бекбоновский router,
-    // но я почему то решил использовать события
-    Backbone.Events.on('action:policies', function () {
-        page.add(pagePolicies);
+    // рисуем левое меню
+    $('.panel').html( menu.render().el );
+    $('.panel-overlay').click(function (e) {
+        var $body = $('body');
+        if ($body.hasClass('with-panel')) {
+            $body.removeClass('with-panel');
+        }
+        e.preventDefault();
     });
 
-    Backbone.Events.on('action:form', function (id) {
-        pageForm(id, function (error, formView) {
-            page.add(formView);
+    // page - вставляет в DOM страницы и анимирует их
+    page.add(pageMain, function () {
+        checkResources();
+    });
+
+    // роутером выступает собыитя бекбона
+    // для навигации лучше бы использоваль бекбоновский router,
+    // но я почему то решил использовать события
+    Backbone.Events.on('action:main', function () {
+        page.add(pageMain);
+    });
+
+    Backbone.Events.on('action:policies', function () {
+        require(['views/policies'], function (pagePolicies) {
+            page.add(pagePolicies);
         });
     });
 
-    Backbone.Events.on('action:detail', function (id) {
+    Backbone.Events.on('policies:add', function (id) {
+        require(['views/policies-add'], function (pageForm) {
+            pageForm(id, function (error, formView) {
+                page.add(formView);
+            });
+        });
+    });
+
+    Backbone.Events.on('policies:detail', function (id) {
         // используем нодовский подход, первый агрумент ошибка, потом все остальное
-        pageDetail(id, function (error, detailView) {
-            if (error !== undefined) {
-                // тут можно показать 404, но пока алерт
-                alert(error);
-                return this;
-            }
-            page.add(detailView);
+        require(['views/policies-detail'], function (pageDetail) {
+            pageDetail(id, function (error, detailView) {
+                if (error) {
+                    // тут можно показать 404, но пока алерт
+                    notify.alert(error);
+                    return this;
+                }
+                page.add(detailView);
+            });
+        });
+    });
+    
+    Backbone.Events.on('policies:check', function (enp) {
+        require(['views/policies-check'], function (check) {
+            check({
+                enp: enp,
+                callback: function (err, view) {
+                    if (err) {
+                        notify.alert(err);
+                        return this;
+                    }
+
+                    page.add(view, function () {
+                        view.check();
+                    });
+                }
+            });
         });
     });
 
     Backbone.Events.on('action:info', function () {
-        page.add(pageInfo);
+        require(['views/info'], function (pageInfo) {
+            page.add(pageInfo);
+        });
+    });
+
+    Backbone.Events.on('info:detail', function (code) {
+        require(['views/info-detail'], function (detail) {
+            detail({
+                code: code,
+                callback: function (err, view) {
+                    if (err) {
+                        notify.alert(err);
+                        return this;
+                    }
+                    page.add(view);
+                }
+            });
+        });
     });
 
     Backbone.Events.on('action:hospital', function () {
-        page.add(pageHospital);
+        require(['views/hospital'], function (pageHospital) {
+            page.add(pageHospital);
+        });
+    });
+
+    Backbone.Events.on('hospital:detail', function (id) {
+        require(['views/hospital-detail'], function (detail) {
+            detail({
+                id: id,
+                callback: function (err, view) {
+                    if (err) {
+                        notify.alert(err);
+                        return this;
+                    }
+                    page.add(view);
+                }
+            });
+        });
     });
 
     Backbone.Events.on('action:offices', function () {
-        page.add(pageOffices);
+        require(['views/offices'], function (pageOffices) {
+            page.add(pageOffices);
+        });
     });
 
     Backbone.Events.on('region:select', function () {
-        page.add(pageRegions);
+        require(['views/regions'], function (pageRegions) {
+            page.add(pageRegions);
+        });
+    });
+
+    Backbone.Events.on('office:detail', function (id) {
+        require(['views/offices-detail'], function (detail) {
+            detail({
+                id: id,
+                callback: function (err, view) {
+                    if (err) {
+                        notify.alert(err);
+                        return this;
+                    }
+                    page.add(view);
+                }
+            });
+        });
     });
 });

@@ -1,43 +1,43 @@
 /* fade */
 
 .page-fade {
-    -webkit-animation: fade .7s ease both;
-    animation: fade .7s ease both;
+    -webkit-animation: fade .4s ease both;
+    animation: fade .4s ease both;
 }
 
 /* move from / to and fade */
 
 .page-moveToLeftFade {
-    -webkit-animation: moveToLeftFade .7s ease both;
-    animation: moveToLeftFade .7s ease both;
+    -webkit-animation: moveToLeftFade .4s ease both;
+    animation: moveToLeftFade .4s ease both;
 }
 .page-moveFromLeftFade {
-    -webkit-animation: moveFromLeftFade .7s ease both;
-    animation: moveFromLeftFade .7s ease both;
+    -webkit-animation: moveFromLeftFade .4s ease both;
+    animation: moveFromLeftFade .4s ease both;
 }
 .page-moveToRightFade {
-    -webkit-animation: moveToRightFade .7s ease both;
-    animation: moveToRightFade .7s ease both;
+    -webkit-animation: moveToRightFade .4s ease both;
+    animation: moveToRightFade .4s ease both;
 }
 .page-moveFromRightFade {
-    -webkit-animation: moveFromRightFade .7s ease both;
-    animation: moveFromRightFade .7s ease both;
+    -webkit-animation: moveFromRightFade .4s ease both;
+    animation: moveFromRightFade .4s ease both;
 }
 .page-moveToTopFade {
-    -webkit-animation: moveToTopFade .7s ease both;
-    animation: moveToTopFade .7s ease both;
+    -webkit-animation: moveToTopFade .4s ease both;
+    animation: moveToTopFade .4s ease both;
 }
 .page-moveFromTopFade {
-    -webkit-animation: moveFromTopFade .7s ease both;
-    animation: moveFromTopFade .7s ease both;
+    -webkit-animation: moveFromTopFade .4s ease both;
+    animation: moveFromTopFade .4s ease both;
 }
 .page-moveToBottomFade {
-    -webkit-animation: moveToBottomFade .7s ease both;
-    animation: moveToBottomFade .7s ease both;
+    -webkit-animation: moveToBottomFade .4s ease both;
+    animation: moveToBottomFade .4s ease both;
 }
 .page-moveFromBottomFade {
-    -webkit-animation: moveFromBottomFade .7s ease both;
-    animation: moveFromBottomFade .7s ease both;
+    -webkit-animation: moveFromBottomFade .4s ease both;
+    animation: moveFromBottomFade .4s ease both;
 }
 
 /* fade */

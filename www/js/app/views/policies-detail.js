@@ -1,12 +1,14 @@
 /* global define, $, _ */
 define([
     'backbone',
+    'app/helper/notify',
     'collections/policies',
     'views/page',
     'text!templates/policies/detail.html',
     'text!templates/policies/detail-item.html'
 ], function (
     Backbone,
+    notify,
     Policies,
     PageView,
     detailPage,
@@ -40,13 +42,6 @@ define([
         }
     });
 
-    var defaultParams = {
-        url: 'http://u-med.ru/local/api/policy/',
-        method: 'GET',
-        type: 'json',
-        crossDomain: true
-    };
-
     // кеш детальных страниц, для предотвращения повторной генерации
     var details = {};
     return function (id, callback) {
@@ -67,15 +62,23 @@ define([
                         'click .control-button_edit': 'edit',
                         'click .control-button_delete': 'remove'
                     },
-                    edit: function () {
-                        Backbone.Events.trigger('action:form', policy.get('id'));
+                    edit: function (e) {
+                        Backbone.Events.trigger('policies:add', policy.get('id'));
+                        e.preventDefault();
                     },
                     remove: function () {
-                        if (confirm('Вы уверены, что хотите удалить полис?')) {
-                            policy.destroy();
-                            Backbone.Events.trigger('page:remove', details[id].page.cid);
-                            delete details[id];
-                        }
+                        notify.confirm({
+                            message: 'Вы действительно хотите удалить информацию о данном полисе?',
+                            buttons: ['Нет', 'Да'],
+                            title: 'Удалить полис',
+                            callback: function (index) {
+                                if (index > 1 || index === true) {
+                                    policy.destroy();
+                                    Backbone.Events.trigger('page:remove', details[id].page.cid);
+                                    delete details[id];
+                                }
+                            }
+                        });
                     },
                     init: function () {
                         this.$item = this.$('.detail');
@@ -91,52 +94,8 @@ define([
                         'click .button': 'checkEnp'
                     },
                     checkEnp: function (e) {
-                        var enp = policy.get('enp'),
-                            params;
-
+                        Backbone.Events.trigger('policies:check', policy.get('enp'));
                         e.preventDefault();
-                        if (enp === undefined) {
-                            alert('Единый номер полиса не введен');
-                            return this;
-                        }
-
-                        params = _.extend({}, defaultParams, {
-                            data: {
-                                enp: enp
-                            }
-                        });
-
-                        $.ajax(params)
-                            .done(this.ajaxSuccess.bind(this))
-                            .fail(this.ajaxFail.bind(this));
-                    },
-                    ajaxSuccess: function (data) {
-                        var key, item = {
-                            success: false
-                        };
-
-                        if (data === undefined) {
-                            alert('Произошла не известная ошибка! Попробуйте повторить запрос.');
-                            return this;
-                        }
-
-                        if (data.success === true) {
-                            for (key in data) {
-                                if (data.hasOwnProperty(key) && key !== 'success') {
-                                    if (data[key].success === true) {
-                                        item = data[key];
-                                        break;
-                                    }
-                                }
-                            }
-                            if (item.success === true) {
-                                policy.set('status', item.text || 'Данные не проверены');
-                                policy.save();
-                            }
-                        }
-                    },
-                    ajaxFail: function () {
-                        alert('Ошибка при совершении запроса');
                     }
                 }
             });

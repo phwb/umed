@@ -1,55 +1,55 @@
 /* move from / to  */
 
 .page-moveToLeft {
-    -webkit-animation: moveToLeft .6s ease both;
-    animation: moveToLeft .6s ease both;
+    -webkit-animation: moveToLeft .4s ease both;
+    animation: moveToLeft .4s ease both;
 }
 .page-moveFromLeft {
-    -webkit-animation: moveFromLeft .6s ease both;
-    animation: moveFromLeft .6s ease both;
+    -webkit-animation: moveFromLeft .4s ease both;
+    animation: moveFromLeft .4s ease both;
 }
 .page-moveToRight {
-    -webkit-animation: moveToRight .6s ease both;
-    animation: moveToRight .6s ease both;
+    -webkit-animation: moveToRight .4s ease both;
+    animation: moveToRight .4s ease both;
 }
 .page-moveFromRight {
-    -webkit-animation: moveFromRight .6s ease both;
-    animation: moveFromRight .6s ease both;
+    -webkit-animation: moveFromRight .4s ease both;
+    animation: moveFromRight .4s ease both;
 }
 .page-moveToTop {
-    -webkit-animation: moveToTop .6s ease both;
-    animation: moveToTop .6s ease both;
+    -webkit-animation: moveToTop .4s ease both;
+    animation: moveToTop .4s ease both;
 }
 .page-moveFromTop {
-    -webkit-animation: moveFromTop .6s ease both;
-    animation: moveFromTop .6s ease both;
+    -webkit-animation: moveFromTop .4s ease both;
+    animation: moveFromTop .4s ease both;
 }
 .page-moveToBottom {
-    -webkit-animation: moveToBottom .6s ease both;
-    animation: moveToBottom .6s ease both;
+    -webkit-animation: moveToBottom .4s ease both;
+    animation: moveToBottom .4s ease both;
 }
 .page-moveFromBottom {
-    -webkit-animation: moveFromBottom .6s ease both;
-    animation: moveFromBottom .6s ease both;
+    -webkit-animation: moveFromBottom .4s ease both;
+    animation: moveFromBottom .4s ease both;
 }
 
 /* move to with different easing */
 
 .page-moveToLeftEasing {
-    -webkit-animation: moveToLeft .7s ease-in-out both;
-    animation: moveToLeft .7s ease-in-out both;
+    -webkit-animation: moveToLeft .4s ease-in-out both;
+    animation: moveToLeft .4s ease-in-out both;
 }
 .page-moveToRightEasing {
-    -webkit-animation: moveToRight .7s ease-in-out both;
-    animation: moveToRight .7s ease-in-out both;
+    -webkit-animation: moveToRight .4s ease-in-out both;
+    animation: moveToRight .4s ease-in-out both;
 }
 .page-moveToTopEasing {
-    -webkit-animation: moveToTop .7s ease-in-out both;
-    animation: moveToTop .7s ease-in-out both;
+    -webkit-animation: moveToTop .4s ease-in-out both;
+    animation: moveToTop .4s ease-in-out both;
 }
 .page-moveToBottomEasing {
-    -webkit-animation: moveToBottom .7s ease-in-out both;
-    animation: moveToBottom .7s ease-in-out both;
+    -webkit-animation: moveToBottom .4s ease-in-out both;
+    animation: moveToBottom .4s ease-in-out both;
 }
 
 /********************************* keyframes **************************************/

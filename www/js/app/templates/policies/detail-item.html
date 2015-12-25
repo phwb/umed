@@ -21,19 +21,15 @@
             <div class="data-list__value"><%- enp %></div>
             <div class="data-list__label label">Единый номер полиса</div>
         </li>
-        <% if (blank !== undefined) { %>
+        <% if (!!blank && blank.length) { %>
         <li class="data-list__i">
-            <div class="data-list__value data-list__value_important"><%- blank %></div>
+            <div class="data-list__value"><%- blank %></div>
             <div class="data-list__label label">Номер бланка</div>
         </li>
         <% } %>
         <li class="data-list__i">
             <div class="data-list__value"><%- _.template.formatDate(date) %> г.</div>
             <div class="data-list__label label">Срок действия</div>
-        </li>
-        <li class="data-list__i">
-            <div class="data-list__value"><%- status %></div>
-            <div class="data-list__label label">Статус</div>
         </li>
     </ul>
 </div>

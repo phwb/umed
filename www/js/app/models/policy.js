@@ -50,9 +50,8 @@ define([
                 ]
             },
             blank: {
-                type: 'Number',
+                type: 'Text',
                 title: 'Номер бланка',
-                validators: ['number'],
                 editorAttrs: {
                     placeholder: 'Указать'
                 }

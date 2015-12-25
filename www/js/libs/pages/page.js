@@ -1,4 +1,5 @@
 /* global define, $ */
+/* jshint multistr: true */
 define([
     'backbone',
     'libs/pages/pages'
@@ -36,12 +37,14 @@ define([
             navbar: new Pages({
                 view: '.header',
                 effect: 'simpleFade'
-            })
+            }),
+            $body: $('body')
         });
 
         return this;
     }
 
+    var hiddenToolbar = {};
     /**
      * @param {object} params
      * @property {Backbone.View} params.navbar
@@ -56,6 +59,10 @@ define([
             // айдишник страницы
             currentPageID = page.data('page');
 
+        if (!isAnimationEnd.apply(this)) {
+            return this;
+        }
+
         // ложим предыдущую страницу в массив для обратной навигации
         var prevPageID = this.page.$view.find('.' + this.page._settings.currentPageClass).data('page');
         if (prevPageID !== undefined) {
@@ -66,20 +73,47 @@ define([
         navbar.data('page', currentPageID);
         this.navbar.addPage(navbar, this.addNavButton.bind(this, navbar));
 
-        // добавим тулбар
-        toolbar.data('page', currentPageID);
-        this.toolbar.addPage(toolbar);
-
         // добавим страницу в DOM
         this.page.addPage(page, callback);
+
+        // добавим тулбар
+        hiddenToolbar[currentPageID] = params.toolbar.show;
+        toolbar.data('page', currentPageID);
+        this.toolbar.addPage(toolbar, function () {
+            // скрыаем если это определно в параметрах
+            if (hiddenToolbar[currentPageID]) {
+                this.page.$view.addClass('footer-through');
+                this.toolbar.$view.css('bottom', '0');
+            } else {
+                this.page.$view.removeClass('footer-through');
+                this.toolbar.$view.css('bottom', '-60px');
+            }
+        }.bind(this));
     };
 
+    var menuButton = '\
+        <div class="header__button nav-button" style="left: auto; right: 0;">\
+            <div class="nav-button__body">\
+                <div class="nav-button__i nav-button__i_top"></div>\
+                <div class="nav-button__i nav-button__i_middle"></div>\
+                <div class="nav-button__i nav-button__i_bottom"></div>\
+            </div>\
+        </div>';
+
     Page.prototype.addNavButton = function (navbar) {
-        var backButton;
+        var backButton, navButton;
 
         backButton = navbar.find('.back-button');
         if (backButton.length && !backButton.data('init')) {
             backButton.data('init', true).click(this.back.bind(this));
+        }
+
+        navButton = navbar.find('.nav-button');
+        if (navButton.length && !navButton.data('init')) {
+            navButton.data('init', true).click(this.menu.bind(this));
+        } else if (!navButton.data('init')) {
+            navButton = $(menuButton).data('init', true).click(this.menu.bind(this));
+            navbar.append(navButton);
         }
     };
 
@@ -99,10 +133,30 @@ define([
         if (args !== undefined) {
             params.callback = args.callback || $.noop;
         }
+        var currPageID = this.page.$view.find('.page-current').data('page');
+        if (currPageID) {
+            Backbone.Events.trigger('back:' + currPageID);
+            Backbone.Events.trigger('back', {
+                curr: currPageID,
+                prev: params.page
+            });
+        }
 
         this.page.next(params);
         this.navbar.next(params);
         this.toolbar.next(params);
+
+        if (hiddenToolbar[prevPage]) {
+            this.page.$view.addClass('footer-through');
+            this.toolbar.$view.css('bottom', '0');
+        } else {
+            this.page.$view.removeClass('footer-through');
+            this.toolbar.$view.css('bottom', '-60px');
+        }
+    };
+
+    Page.prototype.menu = function () {
+        this.$body.addClass('with-panel');
     };
 
     /**

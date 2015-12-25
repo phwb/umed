@@ -27,7 +27,7 @@ define([
             this.remove();
         },
         detail: function (e) {
-            Backbone.Events.trigger('action:detail', this.model.get('id'));
+            Backbone.Events.trigger('policies:detail', this.model.get('id'));
             e.preventDefault();
         },
         render: function () {
@@ -75,7 +75,7 @@ define([
                 'click #policyAdd': 'showForm'
             },
             showForm: function () {
-                Backbone.Events.trigger('action:form');
+                Backbone.Events.trigger('policies:add');
             }
         }
     });

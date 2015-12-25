@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" id="com.ugraweb.u-med" version="0.0.1">
-    <name>Югория</name>
+    <name>Югория-Мед</name>
     <description>ОАО СМК Югория-Мед</description>
     <author email="ugraweb@gmail.com" href="http://ugraweb.ru">Ugraweb Team</author>
     <content src="index.html" />
@@ -45,27 +45,32 @@
     <plugin name="org.apache.cordova.vibration" />-->
 
     <icon src="res/icon/icon.png" />
-    <icon platform="android" qualifier="ldpi" src="res/icon/android/icon-36-ldpi.png" />
-    <icon platform="android" qualifier="mdpi" src="res/icon/android/icon-48-mdpi.png" />
-    <icon platform="android" qualifier="hdpi" src="res/icon/android/icon-72-hdpi.png" />
-    <icon platform="android" qualifier="xhdpi" src="res/icon/android/icon-96-xhdpi.png" />
-    <icon platform="ios" height="57" src="res/icon/ios/icon-57.png" width="57" />
-    <icon platform="ios" height="72" src="res/icon/ios/icon-72.png" width="72" />
-    <icon platform="ios" height="114" src="res/icon/ios/icon-57-2x.png" width="114" />
-    <icon platform="ios" height="144" src="res/icon/ios/icon-72-2x.png" width="144" />
+    <icon platform="android" qualifier="ldpi"     src="res/icon/android/icon-36-ldpi.png" />
+    <icon platform="android" qualifier="mdpi"     src="res/icon/android/icon-48-mdpi.png" />
+    <icon platform="android" qualifier="hdpi"     src="res/icon/android/icon-72-hdpi.png" />
+    <icon platform="android" qualifier="xhdpi"    src="res/icon/android/icon-96-xhdpi.png" />
+    <icon platform="ios" width="57"  height="57"  src="res/icon/ios/icon-57.png" />
+    <icon platform="ios" width="72"  height="72"  src="res/icon/ios/icon-72.png" />
+    <icon platform="ios" width="114" height="114" src="res/icon/ios/icon-57-2x.png" />
+    <icon platform="ios" width="144" height="144" src="res/icon/ios/icon-72-2x.png" />
 
-    <splash platform="android" qualifier="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png" />
-    <splash platform="android" qualifier="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
-    <splash platform="android" qualifier="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
+    <splash platform="android" qualifier="port-ldpi"  src="res/screen/android/screen-ldpi-portrait.png" />
+    <splash platform="android" qualifier="port-mdpi"  src="res/screen/android/screen-mdpi-portrait.png" />
+    <splash platform="android" qualifier="port-hdpi"  src="res/screen/android/screen-hdpi-portrait.png" />
     <splash platform="android" qualifier="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
-    <splash platform="ios" height="480" src="res/screen/ios/screen-iphone-portrait.png" width="320" />
-    <splash platform="ios" height="960" src="res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
-    <splash platform="ios" height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
-    <splash platform="ios" height="1024" src="res/screen/ios/screen-ipad-portrait.png" width="768" />
-    <splash platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
+    <splash platform="ios" width="320"  height="480"  src="res/screen/ios/screen-iphone-portrait.png" />
+    <splash platform="ios" width="640"  height="960"  src="res/screen/ios/screen-iphone-portrait-2x.png" />
+    <splash platform="ios" width="640"  height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" />
+    <splash platform="ios" width="768"  height="1024" src="res/screen/ios/screen-ipad-portrait.png" />
+    <splash platform="ios" width="1024" height="768"  src="res/screen/ios/screen-ipad-landscape.png" />
 
+    <!--
+    Before using white list plugin, need install it:
+    phonegap plugin add cordova-plugin-whitelist
+    -->
+    <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-whitelist" />
-    <access origin="http://u-med.ru/local/api/*" />
+    <access origin="http://u-med.ru" />
 
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
