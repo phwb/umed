@@ -26,11 +26,23 @@
             <div class="data-list__value"><%- blank %></div>
             <div class="data-list__label label">Номер бланка</div>
         </li>
+        <% } else { %>
+        <li class="data-list__i">
+            <div class="data-list__value">&nbsp;</div>
+            <div class="data-list__label label">Номер бланка</div>
+        </li>
         <% } %>
+        <% if (date) { %>
         <li class="data-list__i">
             <div class="data-list__value"><%- _.template.formatDate(date) %> г.</div>
             <div class="data-list__label label">Срок действия</div>
         </li>
+        <% } else { %>
+        <li class="data-list__i">
+            <div class="data-list__value">&nbsp;</div>
+            <div class="data-list__label label">Срок действия</div>
+        </li>
+        <% } %>
     </ul>
 </div>
 <div class="panel__controls controls">

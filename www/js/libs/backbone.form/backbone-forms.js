@@ -1,4 +1,3 @@
-/*global define*/
 /**
  * Backbone Forms v0.14.0
  *
@@ -12,7 +11,7 @@
  * http://github.com/powmedia/backbone-forms
  */
 define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
-'use strict';
+
   //==================================================================================================
 //FORM
 //==================================================================================================
@@ -478,8 +477,8 @@ var Form = Backbone.View.extend({
   ', null, this.templateSettings),
 
   templateSettings: {
-    evaluate: /<%([\s\S]+?)%>/g,
-    interpolate: /<%=([\s\S]+?)%>/g,
+    evaluate: /<%([\s\S]+?)%>/g, 
+    interpolate: /<%=([\s\S]+?)%>/g, 
     escape: /<%-([\s\S]+?)%>/g
   },
 
@@ -2266,6 +2265,7 @@ Form.editors.Date = Form.editors.Base.extend({
     var datesOptions = _.map(_.range(1, 32), function(date) {
       return '<option value="'+date+'">' + date + '</option>';
     });
+    datesOptions.unshift('<option value="">ДД</option>');
 
     var monthsOptions = _.map(_.range(0, 12), function(month) {
       var value = (options.showMonthNames)
@@ -2274,6 +2274,7 @@ Form.editors.Date = Form.editors.Base.extend({
 
       return '<option value="'+month+'">' + value + '</option>';
     });
+    monthsOptions.unshift('<option value="">ММ</option>');
 
     var yearRange = (schema.yearStart < schema.yearEnd)
       ? _.range(schema.yearStart, schema.yearEnd + 1)
@@ -2282,6 +2283,7 @@ Form.editors.Date = Form.editors.Base.extend({
     var yearsOptions = _.map(yearRange, function(year) {
       return '<option value="'+year+'">' + year + '</option>';
     });
+    yearsOptions.unshift('<option value="">ГГГГ</option>');
 
     //Render the selects
     var $el = $($.trim(this.template({
@@ -2329,6 +2331,10 @@ Form.editors.Date = Form.editors.Base.extend({
    * @param {Date} date
    */
   setValue: function(date) {
+    var currentValue = this.model.get( this.key );
+    if (!currentValue) {
+        return this;
+    }
     this.$date.val(date.getDate());
     this.$month.val(date.getMonth());
     this.$year.val(date.getFullYear());

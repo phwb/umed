@@ -11,7 +11,7 @@ define([
             enp: '',
             sex: '',
             number: 0,
-            date: new Date(),
+            date: '',
             status: 'Полис не проверен'
         },
         schema: {

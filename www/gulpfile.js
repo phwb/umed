@@ -1,5 +1,6 @@
 "use strict";
 
+/* global require */
 var gulp = require('gulp'),
     rjs = require ('gulp-requirejs'),
     uglify = require('gulp-uglify'),
@@ -29,7 +30,7 @@ gulp.task('rjs', function () {
             underscore: 'libs/underscore/underscore',
             backbone: 'libs/backbone/backbone',
             store: 'libs/backbone.localstorage/backbone.localStorage',
-            backboneForm: 'libs/backbone.form/backbone-forms.min',
+            backboneForm: 'libs/backbone.form/backbone-forms',
             text: 'libs/require/text',
             // мои библиотеки
             page: 'libs/pages/page',
@@ -77,18 +78,14 @@ gulp.task('rjs', function () {
 
 gulp.task('static', function () {
     gulp.src(['./static/*']).pipe(gulp.dest(dist.root + 'static'));
-});
-
-gulp.task('upload', function () {
     gulp.src(['./upload/*']).pipe(gulp.dest(dist.root + 'upload'));
-});
-
-gulp.task('img', function () {
     gulp.src(['./img/*']).pipe(gulp.dest(dist.root + 'img'));
-});
-
-gulp.task('index', function () {
-    gulp.src(['./index.html']).pipe(gulp.dest(dist.root + 'index.html'));
+    gulp.src(['./index.html']).pipe(gulp.dest(dist.root));
+    gulp.src(['./css/fonts/*']).pipe(gulp.dest(dist.root + 'css/fonts'));
+    gulp.src(['./js/svg.js']).pipe(gulp.dest(dist.root + 'js'));
+    // копируем ресурсы
+    gulp.src(['../res/**/*']).pipe(gulp.dest('./build/res'));
+    gulp.src(['../config.xml']).pipe(gulp.dest('./build'));
 });
 
 gulp.task('css', function () {
@@ -109,4 +106,4 @@ gulp.task('css', function () {
         .pipe(gulp.dest(dist.root + 'css'));
 });
 
-gulp.task('default', ['rjs', 'css', 'static', 'upload', 'img', 'index']);
+gulp.task('default', ['rjs', 'css', 'static']);

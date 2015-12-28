@@ -14,7 +14,7 @@ require.config({
         underscore: 'libs/underscore/underscore',
         backbone: 'libs/backbone/backbone',
         store: 'libs/backbone.localstorage/backbone.localStorage',
-        backboneForm: 'libs/backbone.form/backbone-forms.min',
+        backboneForm: 'libs/backbone.form/backbone-forms',
         text: 'libs/require/text',
         // мои библиотеки
         page: 'libs/pages/page',
@@ -62,6 +62,8 @@ require([
 
     // page - вставляет в DOM страницы и анимирует их
     page.add(pageMain, function () {
+        // после рендера главной страницы проверяем актуальность данных
+        // и обновляем при необходимости
         checkResources();
     });
 
@@ -109,7 +111,6 @@ require([
                         notify.alert(err);
                         return this;
                     }
-
                     page.add(view, function () {
                         view.check();
                     });
