@@ -1,13 +1,10 @@
 /* global define, require, ymaps, window */
 define([
     'backbone',
-    'collections/offices',
     'views/page',
     'text!templates/offices/map.html'
 ], function (
     Backbone,
-    // коллекции
-    Offices,
     // шаблоны
     PageView,
     mapPage
@@ -18,25 +15,21 @@ define([
         maps = {};
 
     return function (params) {
-        var id = params.id || false,
-            callback = params.callback || $.noop;
+        var model = params.model || false,
+            callback = params.callback || $.noop,
+            id;
 
-        if (!id) {
-            callback('Не известный идентификатор офиса');
+        if (!model) {
+            callback('Не задана модель');
             return this;
         }
 
-        var office = Offices.get(id);
-        if (!office) {
-            callback('Офис не найден');
-            return this;
-        }
-
+        id = model.get('id');
         if (!maps[id]) {
             var page = new PageView({
                 html: mapPage,
                 Navbar: {
-                    title: office.get('name')
+                    title: model.get('name')
                 },
                 Page: {
                     init: function () {
@@ -63,8 +56,8 @@ define([
                         }
                     },
                     renderMap: function () {
-                        var coords = office.get('coords');
-                        if (coords) {
+                        var coords = model.get('coords');
+                        if (coords && coords.value) {
                             ymaps.ready(function () {
                                 var map, placemark;
                                 /** @property {object} map.geoObjects */

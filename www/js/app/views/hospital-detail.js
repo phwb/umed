@@ -44,7 +44,9 @@ define([
         }
 
         if (!detail[id]) {
-            var page = new PageView({
+            var pageParams, page;
+
+            pageParams = {
                 html: detailPage,
                 Navbar: {
                     title: office.get('name')
@@ -60,10 +62,21 @@ define([
                     }
                 },
                 Toolbar: {
+                    events: {
+                        'click .button': 'showOfficeOnMap'
+                    },
+                    showOfficeOnMap: function () {
+                        Backbone.Events.trigger('map', office);
+                    },
                     show: false
                 }
-            });
+            };
+            // если у объекта есть координаты по покажем кнопку "на карте"
+            if (office.get('coords')) {
+                pageParams.Toolbar.show = true;
+            }
 
+            page = new PageView(pageParams);
             detail[id] = page.init();
         }
 

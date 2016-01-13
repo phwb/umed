@@ -1,4 +1,4 @@
-/* global define, _, $ */
+/* global define, _, $, require, window, ymaps */
 /* jshint multistr: true */
 define([
     'backbone',
@@ -136,8 +136,57 @@ define([
         }
     });
 
+    var OfficeMap = Backbone.View.extend({
+        initialize: function (params) {
+            var map = params.center || {
+                    coords: {
+                        value: [55.751574, 37.573856]
+                    },
+                    zoom: 12
+                };
+
+            ymaps.ready(function () {
+                this.map = new ymaps.Map(this.$el[0], {
+                    center: map.coords.value,
+                    zoom: map.zoom
+                });
+            }.bind(this));
+
+            this.city = params.city;
+            this.addAll();
+        },
+        addAll: function () {
+            var offices = this.collection.where({city: this.city});
+
+            if (offices.length > 0) {
+                ymaps.ready(function () {
+                    _(offices).each(this.addItem, this);
+                }.bind(this));
+            }
+        },
+        addItem: function (item) {
+            var coords = item.get('coords'),
+                placemark;
+
+            if (coords) {
+                placemark = new ymaps.Placemark(coords.value, {}, {
+                    iconLayout: 'default#image',
+                    iconImageHref: './img/location.svg',
+                    iconImageSize: [40, 40]
+                });
+                this.map.geoObjects.add(placemark);
+            }
+        },
+        setCenter: function (map, city) {
+            this.map.setCenter(map.coords.value, map.zoom);
+
+            this.city = city;
+            this.addAll();
+        }
+    });
+
     /* --- Page view --- */
-    var list = {};
+    var list = {}, map;
     var pageView = new PageView({
         html: indexPage,
         Navbar: {
@@ -145,19 +194,66 @@ define([
         },
         Page: {
             events: {
-                'click .region': 'selectRegion'
+                'click .region': 'selectRegion',
+                'click .tabs__i': 'toggleView'
             },
             selectRegion: function (e) {
                 Backbone.Events.trigger('region:select');
                 e.preventDefault();
             },
+            toggleView: function (e) {
+                var $button = $(e.currentTarget),
+                    action = $button.data('action');
+
+                e.preventDefault();
+                if ( $button.hasClass('tabs__i_active') ) {
+                    return this;
+                }
+
+                $button.addClass('tabs__i_active').siblings().removeClass('tabs__i_active');
+                switch (action) {
+                    case 'list':
+                        this.$map.hide();
+                        this.$list.show();
+                        break;
+                    case 'map':
+                        this.$list.hide();
+                        this.$map.show();
+
+                        if ('ymaps' in window) {
+                            this.renderMap();
+                        } else {
+                            // грузим "Яндекс.Карты" только тогда, когда они нужны
+                            // то есть по первому клику на кнопку "Карта"
+                            this.$map.addClass('page_loader');
+                            require(['ymaps'], function () {
+                                this.$map.removeClass('page_loader');
+                                this.renderMap();
+                            }.bind(this));
+                        }
+                        break;
+                }
+            },
+            renderMap: function () {
+                var city = Cities.getSelected();
+                if (!map) {
+                    map = new OfficeMap({
+                        el: this.$map,
+                        collection: Hospitals,
+                        center: city.get('map'),
+                        city: city.get('id')
+                    });
+                } else {
+                    map.setCenter(city.get('map'), city.get('id'));
+                }
+            },
             init: function () {
                 this.$name = this.$('.region-name');
                 this.$list = this.$('.list');
-
+                this.$map = this.$('.map');
                 this.$name.text('Выберите регион');
+                this.$map.hide();
 
-                this.listenTo(Cities, 'selected reset', this.setButtonName);
                 this.listenTo(Cities, 'selected reset', this.loadHospital);
                 this.listenTo(Cities, 'ajax', this.loadCitiesComplete);
 
@@ -168,26 +264,36 @@ define([
                 if (!Cities.length) {
                     Cities.fetch({reset: true});
                 } else {
-                    var id = this.loadCitiesComplete('success');
-                    if (id) {
-                        this.setButtonName(id);
-                    }
+                    this.loadCitiesComplete('success');
                 }
             },
             loadHospital: function (arg) {
-                var id;
+                var id, name, city;
 
                 if (arg instanceof Backbone.Collection && arg.length > 0) {
-                    id = arg.getSelected().get('id');
+                    city = arg.getSelected();
+                    id = city.get('id');
                 } else if (typeof arg === 'string') {
                     id = arg;
+                    city = Cities.get(id);
                 }
 
-                if (id === undefined) {
+                // если не нашли айдишика города, то и делать тут не чего
+                if (!id) {
                     return this;
                 }
 
-                if (list[id] === undefined) {
+                name = city.get('name');
+                if (name) {
+                    this.$name.text(name);
+                }
+
+                // если карта проинициализирована, то установим новый центр карты
+                if (map) {
+                    map.setCenter(city.get('map'), id);
+                }
+
+                if (!list[id]) {
                     list[id] = new OfficeList({
                         collection: Hospitals,
                         city: id
@@ -197,7 +303,6 @@ define([
                 Hospitals.fetch({reset: true});
                 // пытаемся найти офисы в текщем городе
                 var localOffices = Hospitals.where({city: id});
-
                 // если их нет, делаем запрос
                 if (!localOffices.length) {
                     fill(id, function (err) {
@@ -221,20 +326,6 @@ define([
                     }
                 }
                 return false;
-            },
-            setButtonName: function (arg) {
-                var name;
-
-                if (arg instanceof Backbone.Collection && arg.length > 0) {
-                    name = arg.getSelected().get('name');
-                } else if (typeof arg === 'string') {
-                    name = Cities.get(arg).get('name');
-                }
-
-                if (!name) {
-                    return this;
-                }
-                this.$name.text(name);
             }
         },
         Toolbar: {

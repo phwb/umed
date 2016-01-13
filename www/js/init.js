@@ -192,10 +192,10 @@ require([
         });
     });
     
-    Backbone.Events.on('office:map', function (id) {
-        require(['views/offices-map'], function (map) {
+    Backbone.Events.on('map', function (model) {
+        require(['views/map'], function (map) {
             map({
-                id: id,
+                model: model,
                 callback: function (err, view) {
                     if (err) {
                         notify.alert(err);
