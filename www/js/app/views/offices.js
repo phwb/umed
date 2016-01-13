@@ -248,7 +248,6 @@ define([
                 } else {
                     this.loadCitiesComplete('success');
                 }
-                console.log(Cities);
             },
             loadCitiesComplete: function (status) {
                 var id;

@@ -31,6 +31,11 @@ define([
             name: 'Информация',
             action: 'info',
             selected: false
+        },
+        {
+            name: 'Обновить',
+            action: 'refresh',
+            selected: false
         }
     ];
 
@@ -75,11 +80,13 @@ define([
         changeAction: function (action) {
             var current = this.model.get('action'),
                 selected = current === action;
-
+            if (action === 'refresh') {
+                return this;
+            }
             this.model.set('selected', selected);
         },
         render: function () {
-            this.$el.text( this.model.get('name') );
+            this.$el.text( this.model.get('name')).addClass( this.model.get('action') );
             if (this.model.get('selected')) {
                 this.$el.addClass('panel-menu__i_active');
             }

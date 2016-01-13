@@ -1,5 +1,6 @@
 /* global define, $, _, window */
 define([
+    'backbone',
     'app/helper/notify',
     // коллекции
     'collections/regions',
@@ -7,6 +8,7 @@ define([
     'collections/offices',
     'collections/hospitals'
 ], function (
+    Backbone,
     notify,
     // коллекции
     Regions,
@@ -20,8 +22,9 @@ define([
         period = 60 * 60 * 24 * 30 * 1000, // секунды + минуты + часы + сутки
         expireDate, now = +(new Date());
 
-    function downloadResources() {
+    function downloadResources(cb) {
         var splash = $('#splash');
+        cb = cb || function () {};
 
         //ls.clear();
         $.ajax({
@@ -145,19 +148,30 @@ define([
                 return this;
             })
             .then(function () {
-                splash.remove();
+                splash.hide();
                 // создадим новую дату обновления и запищем в хранилице
                 expireDate = new Date(now + period);
                 ls.setItem('expire', +expireDate + '');
+                cb();
             })
             .fail(function () {
-                splash.remove();
+                splash.hide();
                 notify.alert('Ошибка интернет соединения!');
             });
     }
 
-    function checkResources() {
+    function checkResources(immediate) {
         var splash = $('#splash');
+        // флаг обновления данных
+        immediate = immediate || false;
+
+        if (immediate) {
+            splash.show();
+            downloadResources(function () {
+                Backbone.Events.trigger('action:main');
+            });
+            return true;
+        }
 
         // читаем дату из хранилица
         expireDate = +ls.getItem('expire');
@@ -174,14 +188,14 @@ define([
                         downloadResources();
                         return true;
                     }
-                    splash.remove();
+                    splash.hide();
                     return false;
                 }
             });
             return true;
         }
 
-        splash.remove();
+        splash.hide();
         return false;
     }
 

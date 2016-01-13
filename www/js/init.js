@@ -208,4 +208,8 @@ require([
             });
         });
     });
+
+    Backbone.Events.on('action:refresh', function () {
+        checkResources(true);
+    });
 });
