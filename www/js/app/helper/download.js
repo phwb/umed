@@ -1,4 +1,4 @@
-/* global define, $, _ */
+/* global define, $, _, window */
 define([
     'app/helper/notify',
     // коллекции
@@ -21,28 +21,14 @@ define([
         expireDate, now = +(new Date());
 
     function downloadResources() {
-        var splash = (function () {
-            var self = $('#splash'),
-                loader = self.find('.splash-loader'),
-                message = $('<div class="splash-message" />'),
-                progress = $('<div class="splash-progress"><div class="splash-progress__status"></div></div>');
+        var splash = $('#splash');
 
-            loader.append(message).append(progress);
-
-            return {
-                self: self,
-                message: message,
-                progress: progress.find('.splash-progress__status')
-            };
-        } ());
-
-        splash.self.removeClass('loading');
-        splash.message.text('Загрузка городов и регионов...');
-
+        //ls.clear();
         $.ajax({
             url: 'http://u-med.ru/local/api/regions/',
             dataType: 'json'
         })
+            // города и регионы
             .then(function (data) {
                 var regions = _(data);
                 if (regions.isArray() === false) {
@@ -69,15 +55,17 @@ define([
 
                     /**
                      * добавляем города в коллекцию
-                     *
+                     * @params {object} city
                      * @property {Number} city.ID
                      * @property {String} city.NAME
+                     * @property {String} city.MAP
                      */
                     cities.each(function (city) {
                         Cities.create({
                             id: city.ID,
                             name: city.NAME,
-                            region: item.ID
+                            region: item.ID,
+                            map: city.MAP || false
                         }, {silent: true});
                     });
                 });
@@ -90,88 +78,87 @@ define([
                 city = Cities.find({region: region.get('id')});
                 city.set({selected: true},  {silent: true}).save();
 
-                var promises = $.when(),
-                    total = Cities.length,
-                    start = 1;
+                return this;
+            })
+            // офисы
+            .then(function () {
+                var citiesID = Cities.map(function (item) {
+                    return item.get('id');
+                });
+                if (!citiesID.length) {
+                    return false;
+                }
+                return $.ajax({
+                    url: 'http://u-med.ru/local/api/offices/',
+                    data: {
+                        cities: citiesID
+                    },
+                    dataType: 'json'
+                });
+            })
+            .then(function (data) {
+                var result = _(data);
 
-                splash.message.text('Загрузка офисов...');
-                Cities.each(function (city) {
-                    var id = city.get('id');
+                if (result.isEmpty()) {
+                    return false;
+                }
 
-                    promises = promises.then(function () {
-                        return $.ajax({
-                            url: 'http://u-med.ru/local/api/city/' + id + '/offices/',
-                            dataType: 'json'
-                        });
-                    }).then(function (data) {
-                        var offices = _(data),
-                            pos = start / total * 100;
-
-                        start += 1;
-                        splash.progress.width(pos + '%');
-
-                        if (!offices.isArray()) {
-                            return this;
-                        }
-
-                        offices.each(function (item) {
-                            var params = _.extend({city: id}, item);
-                            Offices.create(params, {silent: true});
-                        }, this);
-                    });
+                result.each(function (offices, key) {
+                    _(offices).each(function (item) {
+                        var params = _.extend({city: key}, item);
+                        Offices.create(params, {silent: true});
+                    }, this);
                 });
 
-                return promises;
+                return this;
             })
+            // больницы
             .then(function () {
-                var promises = $.when(),
-                    total = Cities.length,
-                    start = 1;
+                var citiesID = Cities.map(function (item) {
+                    return item.get('id');
+                });
+                if (!citiesID.length) {
+                    return false;
+                }
+                return $.ajax({
+                    url: 'http://u-med.ru/local/api/hospitals/',
+                    data: {
+                        cities: citiesID
+                    },
+                    dataType: 'json'
+                });
+            })
+            .then(function (data) {
+                var result = _(data);
 
-                splash.message.text('Загрузка больниц...');
-                Cities.each(function (city) {
-                    var id = city.get('id');
+                if (result.isEmpty()) {
+                    return false;
+                }
 
-                    promises = promises.then(function () {
-                        return $.ajax({
-                            url: 'http://u-med.ru/local/api/city/' + id + '/hospitals/',
-                            dataType: 'json'
-                        });
-                    }).then(function (data) {
-                        var offices = _(data),
-                            pos = start / total * 100;
-
-                        start += 1;
-                        splash.progress.width(pos + '%');
-
-                        if (!offices.isArray()) {
-                            return this;
-                        }
-
-                        offices.each(function (item) {
-                            var params = _.extend({city: id}, item);
-                            Hospitals.create(params, {silent: true});
-                        }, this);
-                    });
+                result.each(function (offices, key) {
+                    _(offices).each(function (item) {
+                        var params = _.extend({city: key}, item);
+                        Hospitals.create(params, {silent: true});
+                    }, this);
                 });
 
-                return promises;
+                return this;
             })
             .then(function () {
-                splash.self.remove();
-                // создадим новую дату обновления
+                splash.remove();
+                // создадим новую дату обновления и запищем в хранилице
                 expireDate = new Date(now + period);
-                // и запищем в хранилице
                 ls.setItem('expire', +expireDate + '');
             })
             .fail(function () {
-                splash.self.remove();
+                splash.remove();
                 notify.alert('Ошибка интернет соединения!');
             });
     }
 
-    // 1450856084382
     function checkResources() {
+        var splash = $('#splash');
+
         // читаем дату из хранилица
         expireDate = +ls.getItem('expire');
         if (!expireDate) {
@@ -187,14 +174,14 @@ define([
                         downloadResources();
                         return true;
                     }
-                    $('#splash').remove();
+                    splash.remove();
                     return false;
                 }
             });
             return true;
         }
 
-        $('#splash').remove();
+        splash.remove();
         return false;
     }
 

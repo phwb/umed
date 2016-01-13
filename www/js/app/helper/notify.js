@@ -52,7 +52,9 @@ define([
             if (isWindows) {
                 alert(params.message);
             } else {
-                navigator.notification.alert(params.message, params.callback, params.title, params.button);
+                document.addEventListener('deviceready', function () {
+                    navigator.notification.alert(params.message, params.callback, params.title, params.button);
+                }, false);
             }
         },
         confirm: function (parameters) {
@@ -75,7 +77,9 @@ define([
             if (isWindows) {
                 params.callback(confirm(params.message));
             } else {
-                navigator.notification.confirm(params.message, params.callback, params.title, params.buttons);
+                document.addEventListener('deviceready', function () {
+                    navigator.notification.confirm(params.message, params.callback, params.title, params.buttons);
+                }, false);
             }
         }
     };

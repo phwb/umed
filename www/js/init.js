@@ -1,10 +1,13 @@
-/*global require, $, _*/
+/* global require, $, _ */
 require.config({
-    //urlArgs: "v=" + (new Date()).getTime(),
+    urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
             deps: ['backbone'],
             exports: 'Store'
+        },
+        ymaps: {
+            exports: 'ymaps'
         }
     },
     paths: {
@@ -16,6 +19,7 @@ require.config({
         store: 'libs/backbone.localstorage/backbone.localStorage',
         backboneForm: 'libs/backbone.form/backbone-forms',
         text: 'libs/require/text',
+        ymaps: 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&load=Map,Placemark',
         // мои библиотеки
         page: 'libs/pages/page',
         // сокращения, чтоб постоянно не писать app
@@ -183,6 +187,23 @@ require([
                         return this;
                     }
                     page.add(view);
+                }
+            });
+        });
+    });
+    
+    Backbone.Events.on('office:map', function (id) {
+        require(['views/offices-map'], function (map) {
+            map({
+                id: id,
+                callback: function (err, view) {
+                    if (err) {
+                        notify.alert(err);
+                        return this;
+                    }
+                    page.add(view, function () {
+                        view.renderMap();
+                    });
                 }
             });
         });

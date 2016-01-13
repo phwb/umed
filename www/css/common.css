@@ -760,7 +760,7 @@ textarea.input {
 /* --------------------------------------------- */
 .tabs {
     position: relative;
-    background: #fff;
+    background: transparent;
     z-index: 100;
 }
 .tabs_transparent {
@@ -786,22 +786,20 @@ textarea.input {
     width: 50%;
     float: left;
 }
+.tabs__a {
+    display: block;
+    background: rgba(255, 255, 255, .8);
+    padding: 4px;
+    border: 1px solid #1976d2;
+    text-align: center;
+    color: #1976d2;
+}
 .tabs__i:first-child .tabs__a {
     border-radius: 5px 0 0 5px;
     border-right: none;
 }
 .tabs__i:last-child .tabs__a {
     border-radius: 0 5px 5px 0;
-}
-.tabs .tabs__a {
-    padding: 4px;
-    text-align: center;
-    display: block;
-    border: 1px solid #1976d2;
-    color: #1976d2;
-}
-.tabs_transparent .tabs__a {
-    background: rgba(255, 255, 255, 0.5);
 }
 .tabs__i_active .tabs__a {
     color: #fff;

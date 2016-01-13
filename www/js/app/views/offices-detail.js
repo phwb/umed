@@ -16,20 +16,6 @@ define([
 ) {
     'use strict';
 
-    function escape(str) {
-        var result = [],
-            arr = str.split(' ');
-        if (arr.length > 0) {
-            _(arr).each(function (item) {
-                var escape = item.trim().replace(/;|,/, '');
-                if (escape.length > 0) {
-                    result.push(escape);
-                }
-            });
-        }
-        return result;
-    }
-
     var Detail = Backbone.View.extend({
         className: 'page__content',
         template: _.template(template),
@@ -74,7 +60,12 @@ define([
                     }
                 },
                 Toolbar: {
-                    show: false
+                    events: {
+                        'click .button': 'showOfficeOnMap'
+                    },
+                    showOfficeOnMap: function () {
+                        Backbone.Events.trigger('office:map', office.get('id'));
+                    }
                 }
             });
 

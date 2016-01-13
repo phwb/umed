@@ -20,6 +20,9 @@ gulp.task('rjs', function () {
             store: {
                 deps: ['backbone'],
                 exports: 'Store'
+            },
+            ymaps: {
+                exports: 'ymaps'
             }
         },
         paths: {
@@ -32,6 +35,7 @@ gulp.task('rjs', function () {
             store: 'libs/backbone.localstorage/backbone.localStorage',
             backboneForm: 'libs/backbone.form/backbone-forms',
             text: 'libs/require/text',
+            ymaps: 'empty:',
             // мои библиотеки
             page: 'libs/pages/page',
             // сокращения, чтоб постоянно не писать app
@@ -49,11 +53,12 @@ gulp.task('rjs', function () {
             'views/hospital': 'app/views/hospital',
             'views/hospital-detail': 'app/views/hospital-detail',
             'views/offices': 'app/views/offices',
+            'views/regions': 'app/views/regions',
             'views/offices-detail': 'app/views/offices-detail',
-            'views/regions': 'app/views/regions'
+            'views/offices-map': 'app/views/offices-map'
         },
         include: [
-            "requireLib",
+            'requireLib',
             // динамически подлкючаемая часть в файле init.js
             'views/policies',
             'views/policies-add',
@@ -64,8 +69,9 @@ gulp.task('rjs', function () {
             'views/hospital',
             'views/hospital-detail',
             'views/offices',
+            'views/regions',
             'views/offices-detail',
-            'views/regions'
+            'views/offices-map'
         ],
         out: 'build.js'
     })
