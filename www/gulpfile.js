@@ -50,12 +50,10 @@ gulp.task('rjs', function () {
             'views/policies-check': 'app/views/policies-check',
             'views/info': 'app/views/info',
             'views/info-detail': 'app/views/info-detail',
-            'views/hospital': 'app/views/hospital',
-            'views/hospital-detail': 'app/views/hospital-detail',
-            'views/offices': 'app/views/offices',
             'views/regions': 'app/views/regions',
-            'views/offices-detail': 'app/views/offices-detail',
-            'views/offices-map': 'app/views/offices-map'
+            'views/object-list': 'app/views/object-list',
+            'views/object-detail': 'app/views/object-detail',
+            'views/object-map': 'app/views/object-map'
         },
         include: [
             'requireLib',
@@ -66,12 +64,10 @@ gulp.task('rjs', function () {
             'views/policies-check',
             'views/info',
             'views/info-detail',
-            'views/hospital',
-            'views/hospital-detail',
-            'views/offices',
             'views/regions',
-            'views/offices-detail',
-            'views/offices-map'
+            'views/object-list',
+            'views/object-detail',
+            'views/object-map'
         ],
         out: 'build.js'
     })
