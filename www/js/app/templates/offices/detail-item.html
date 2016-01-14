@@ -1,8 +1,10 @@
-<h2 class="h1"><%- name %></h2>
+<h2 class="h1"><%= name %></h2>
+
 <hr class="separator">
-<% if (address.length) { %>
+
+<% if (obj.address) { %>
 <div class="line">
-    <div class="label">Адрес:</div><%- address %>
+    <div class="label">Адрес:</div><%= address %>
 </div>
 <% } %>
 
@@ -19,8 +21,8 @@
     <% }); %>
 <% } %>
 
+<% if (obj.days) { %>
 <hr class="separator">
-
 <div class="line">
     <div class="label">График работы:</div>
     <div class="schedule">
@@ -63,3 +65,4 @@
         <% } %>
     </div>
 </div>
+<% } %>

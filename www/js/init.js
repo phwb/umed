@@ -145,15 +145,17 @@ require([
     });
 
     Backbone.Events.on('action:hospital', function () {
-        require(['views/hospital'], function (pageHospital) {
-            page.add(pageHospital);
-        });
-    });
-
-    Backbone.Events.on('hospital:detail', function (id) {
-        require(['views/hospital-detail'], function (detail) {
-            detail({
-                id: id,
+        require([
+            'collections/hospitals',
+            'views/object-list'
+        ], function (
+            Hospitals,
+            list
+        ) {
+            list({
+                uid: 'hospital',
+                collection: Hospitals,
+                title: 'Больницы',
                 callback: function (err, view) {
                     if (err) {
                         notify.alert(err);
@@ -166,21 +168,16 @@ require([
     });
 
     Backbone.Events.on('action:offices', function () {
-        require(['views/offices'], function (pageOffices) {
-            page.add(pageOffices);
-        });
-    });
-
-    Backbone.Events.on('region:select', function () {
-        require(['views/regions'], function (pageRegions) {
-            page.add(pageRegions);
-        });
-    });
-
-    Backbone.Events.on('office:detail', function (id) {
-        require(['views/offices-detail'], function (detail) {
-            detail({
-                id: id,
+        require([
+            'collections/offices',
+            'views/object-list'
+        ], function (
+            Offices,
+            list
+        ) {
+            list({
+                uid: 'offices',
+                collection: Offices,
                 callback: function (err, view) {
                     if (err) {
                         notify.alert(err);
@@ -191,9 +188,30 @@ require([
             });
         });
     });
+
+    Backbone.Events.on('object:detail', function (model) {
+        require(['views/object-detail'], function (detail) {
+            detail({
+                model: model,
+                callback: function (err, view) {
+                    if (err) {
+                        notify.alert(err);
+                        return this;
+                    }
+                    page.add(view);
+                }
+            });
+        });
+    });
+
+    Backbone.Events.on('region:select', function () {
+        require(['views/regions'], function (pageRegions) {
+            page.add(pageRegions);
+        });
+    });
     
     Backbone.Events.on('map', function (model) {
-        require(['views/map'], function (map) {
+        require(['views/object-map'], function (map) {
             map({
                 model: model,
                 callback: function (err, view) {
