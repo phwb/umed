@@ -13,13 +13,13 @@
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />              <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen" value="false" />                  <!-- all: hides the status bar at the top of the screen -->
+    <preference name="android-minSdkVersion" value="14" />          <!-- android: minimum Android SDK version ~ Android 4.0, 4.0.1, 4.0.2 ICE_CREAM_SANDWICH -->
+    <preference name="android-installLocation" value="auto" />      <!-- android: where an app can be installed - defaults to internalOnly. auto or preferExternal allow the app to be installed on an SD card -->
     <preference name="target-device" value="universal" />           <!-- ios: possible values are handset, tablet, or universal -->
     <preference name="prerendered-icon" value="true" />             <!-- ios: this will cause iOS to not apply its gloss to the app's icon on the user's home screen -->
     <preference name="detect-data-types" value="true" />            <!-- ios: controls whether certain data types (such as phone numbers and dates) are automatically turned into links by the system  -->
     <preference name="exit-on-suspend" value="false" />             <!-- ios: if set to true, app will terminate when suspended, for example when home button is pressed -->
-    <preference name="android-minSdkVersion" value="14" />          <!-- android: minimum Android SDK version ~ Android 4.0, 4.0.1, 4.0.2 ICE_CREAM_SANDWICH -->
-    <preference name="android-installLocation" value="auto" />      <!-- android: where an app can be installed - defaults to internalOnly. auto or preferExternal allow the app to be installed on an SD card -->
-    <preference name="webviewbounce" value="true" />                <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
+    <preference name="webviewbounce" value="false" />               <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
     <preference name="stay-in-webview" value="false" />             <!-- ios: external links should open in the default browser, 'true' would use the webview the app lives in -->
     <preference name="ios-statusbarstyle" value="black-opaque" />   <!-- ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar -->
     <preference name="show-splash-screen-spinner" value="true" />   <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
