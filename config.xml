@@ -20,7 +20,7 @@
     -->
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />              <!-- all: possible values handset, tablet, or universal -->
-    <preference name="fullscreen" value="true" />                  <!-- all: hides the status bar at the top of the screen -->
+    <preference name="fullscreen" value="false" />                  <!-- all: hides the status bar at the top of the screen -->
     <preference name="android-minSdkVersion" value="14" />          <!-- android: minimum Android SDK version ~ Android 4.0, 4.0.1, 4.0.2 ICE_CREAM_SANDWICH -->
     <preference name="android-installLocation" value="auto" />      <!-- android: where an app can be installed - defaults to internalOnly. auto or preferExternal allow the app to be installed on an SD card -->
     <preference name="target-device" value="universal" />           <!-- ios: possible values are handset, tablet, or universal -->
@@ -33,9 +33,9 @@
     <preference name="show-splash-screen-spinner" value="true" />   <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
     <preference name="auto-hide-splash-screen" value="true" />      <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
     <!-- ios: status bar -->
-    <preference name="StatusBarOverlaysWebView" value="false"/>
-    <preference name="StatusBarBackgroundColor" value="#1976D2"/>
-    <preference name="StatusBarStyle" value="default" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="StatusBarStyle" value="lightcontent" />
 
     <icon src="res/icon/icon.png" />
     <platform name="android">
