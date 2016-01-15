@@ -9,9 +9,10 @@
     Before using white list plugin, need install it:
     phonegap plugin add cordova-plugin-whitelist
     -->
-    <plugin name="cordova-plugin-dialogs" spec="1.2.0" />
-    <plugin name="cordova-plugin-statusbar" spec="2.0.0" />
-    <plugin name="cordova-plugin-whitelist" spec="1.2.0" />
+    <plugin name="cordova-plugin-dialogs" />
+    <plugin name="cordova-plugin-statusbar" />
+    <plugin name="cordova-plugin-whitelist" />
+    <plugin name="cordova-plugin-device" />
 
     <!--
     If you do not want any permissions to be added to your app, add the
