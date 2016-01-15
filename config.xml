@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="com.ugraweb.umed" version="1.0.1">
+<widget xmlns="http://www.w3.org/ns/widgets" id="ru.ugraweb.umed" version="1.0.1">
     <name>Югория-Мед</name>
     <description>ОАО СМК Югория-Мед</description>
     <author email="ugraweb@gmail.com" href="http://ugraweb.ru">Ugraweb Team</author>
@@ -62,12 +62,12 @@
     <!--<splash platform="android" qualifier="port-ldpi"  src="res/screen/android/screen-ldpi-portrait.png" />
     <splash platform="android" qualifier="port-mdpi"  src="res/screen/android/screen-mdpi-portrait.png" />
     <splash platform="android" qualifier="port-hdpi"  src="res/screen/android/screen-hdpi-portrait.png" />
-    <splash platform="android" qualifier="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
+    <splash platform="android" qualifier="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />-->
     <splash platform="ios" width="320"  height="480"  src="res/screen/ios/screen-iphone-portrait.png" />
     <splash platform="ios" width="640"  height="960"  src="res/screen/ios/screen-iphone-portrait-2x.png" />
     <splash platform="ios" width="640"  height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" />
     <splash platform="ios" width="768"  height="1024" src="res/screen/ios/screen-ipad-portrait.png" />
-    <splash platform="ios" width="1024" height="768"  src="res/screen/ios/screen-ipad-landscape.png" />-->
+    <splash platform="ios" width="1024" height="768"  src="res/screen/ios/screen-ipad-landscape.png" />
 
     <!--
     Before using white list plugin, need install it:
