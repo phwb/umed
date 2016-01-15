@@ -64,9 +64,11 @@ require([
         e.preventDefault();
     });
 
-    if ('StatusBar' in window) {
-        StatusBar.overlaysWebView(false);
-    }
+    document.addEventListener('deviceready', function () {
+        if ('StatusBar' in window) {
+            StatusBar.hide();
+        }
+    }, false);
 
     // page - вставляет в DOM страницы и анимирует их
     page.add(pageMain, function () {
