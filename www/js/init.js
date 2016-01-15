@@ -1,4 +1,4 @@
-/* global require, $, _ */
+/* global require, $, _, window, StatusBar */
 require.config({
     urlArgs: "v=" + (new Date()).getTime(),
     shim: {
@@ -63,6 +63,10 @@ require([
         }
         e.preventDefault();
     });
+
+    if ('StatusBar' in window) {
+        StatusBar.overlaysWebView(false);
+    }
 
     // page - вставляет в DOM страницы и анимирует их
     page.add(pageMain, function () {
