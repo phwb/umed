@@ -1,4 +1,4 @@
-/* global require, $, _, window, StatusBar */
+/* global require, $ */
 require.config({
     urlArgs: "v=" + (new Date()).getTime(),
     shim: {
@@ -30,20 +30,27 @@ require.config({
     }
 });
 
-(function (w) {
+/**
+ * @params w
+ * @property {function} w.open
+ */
+(function () {
     "use strict";
 
-    var ready = w.ready;
-
+    var ready = window.ready;
+    
     function loadComplete() {
-        console.log('after device ready');
+        require(['load'], function () {
+            $(document).on('click', 'a[target="_system"]', function (e) {
+                e.preventDefault();
+                window.open($(this).attr('href'), '_system');
+            });
+        });
     }
 
     if (ready.state) {
-        require(['load'], loadComplete);
+        loadComplete();
     } else {
-        document.addEventListener(ready.eventName, function () {
-            require(['load'], loadComplete);
-        });
+        document.addEventListener(ready.eventName, loadComplete, false);
     }
-} (window));
+} ());
