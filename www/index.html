@@ -6,7 +6,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self' data: http://u-med.ru https://*.yandex.ru http://*.yandex.ru https://*.yandex.net http://*.yandex.net;
+          content="default-src 'self' data: gap: http://u-med.ru https://*.yandex.ru http://*.yandex.ru https://*.yandex.net http://*.yandex.net;
                    style-src   'self' 'unsafe-inline';
                    script-src  'self' https://*.yandex.ru http://*.yandex.ru 'unsafe-inline' 'unsafe-eval';">
 
@@ -15,40 +15,43 @@
     <link rel="stylesheet" href="./css/animations/fade.css">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/style.css">
-
     <script src="./js/svg.js"></script>
+
+    <!--<link rel="stylesheet" href="./css/styles.min.css">
+    <script src="./js/svg.js"></script>-->
 </head>
 <body>
-<!-- Cached SVG icons -->
 <div id="svg-icons"></div>
 <div id="splash" class="loading">
     <img src="./img/logo-full.svg" class="splash-image" >
     <div class="splash-loader"></div>
 </div>
-<!-- Left Panel -->
 <div class="panel panel-left"></div>
 <div class="panel-overlay"></div>
 
-<!-- Main view -->
 <div class="view">
-    <!-- Navbar  -->
     <header class="header"></header>
-    <!-- Pages -->
     <div class="pages header-through footer-through"></div>
-    <!-- Toolbar -->
     <footer class="footer"></footer>
 </div>
 
-<!-- Init SVG icons -->
 <script>
-/* global SVG_ICONS */
 (function () {
+    var ready = {
+        eventName: 'cordova' in window ? 'deviceready' : 'DOMContentLoaded',
+        state: false
+    };
+
     document.getElementById('svg-icons').innerHTML = SVG_ICONS;
+    document.addEventListener(ready.eventName, function () {
+        ready.state = true;
+    });
+
+    window.ready = ready;
 } ());
 </script>
-<!-- Include Cordova JS -->
-<!--<script src="cordova.js"></script>-->
-<!-- Application scripts -->
+<!--<script src="./cordova.js"></script>-->
 <script data-main="./js/init" src="./js/libs/require/require.js"></script>
+<!--<script src="./js/build.min.js"></script>-->
 </body>
 </html>
