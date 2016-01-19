@@ -1,6 +1,6 @@
-/* global require, $ */
+/* global require, $, StatusBar */
 require.config({
-    //urlArgs: "v=" + (new Date()).getTime(),
+    urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
             deps: ['backbone'],
@@ -45,6 +45,12 @@ require.config({
                 e.preventDefault();
                 window.open($(this).attr('href'), '_system');
             });
+        });
+        
+        document.addEventListener('deviceready', function () {
+            if ('StatusBar' in window) {
+                StatusBar.hide();
+            }
         });
     }
 
