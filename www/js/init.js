@@ -1,6 +1,6 @@
 /* global require, $, StatusBar */
 require.config({
-    urlArgs: "v=" + (new Date()).getTime(),
+    //urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
             deps: ['backbone'],
@@ -30,10 +30,6 @@ require.config({
     }
 });
 
-/**
- * @params w
- * @property {function} w.open
- */
 (function () {
     "use strict";
 
