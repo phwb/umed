@@ -128,7 +128,6 @@ define([
                 placemark;
 
             if (coords) {
-                console.log(coords.value);
                 placemark = new ymaps.Placemark(coords.value, {}, {
                     iconLayout: 'default#image',
                     iconImageHref: './img/location.svg',

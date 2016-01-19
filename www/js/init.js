@@ -1,6 +1,6 @@
 /* global require, $ */
 require.config({
-    urlArgs: "v=" + (new Date()).getTime(),
+    //urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
             deps: ['backbone'],
