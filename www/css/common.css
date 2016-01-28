@@ -227,6 +227,7 @@ a, .u {
 }
 .main-nav {
     margin-bottom: 25px;
+    border-top: 1px solid #219cf2;
 }
 .main-nav__lst {
     margin: 0;
@@ -1046,4 +1047,13 @@ h4, .h4 { font-size: 1.4rem; }
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.alpha-group {
+    background: #1976d2;
+    border-bottom: 1px solid #1562b6;
+    padding: 5px 0 4px;
+    color: #fff;
+    font-family: "Open Sans Semibold", "Open Sans", Arial, sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
 }
