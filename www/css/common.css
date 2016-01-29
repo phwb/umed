@@ -1049,10 +1049,11 @@ h4, .h4 { font-size: 1.4rem; }
     overflow: hidden;
 }
 .alpha-group {
-    background: #1976d2;
+    /*background: #1976d2;*/
+    background: #fff;
     border-bottom: 1px solid #1562b6;
     padding: 5px 0 4px;
-    color: #fff;
+    color: #ff1235;
     font-family: "Open Sans Semibold", "Open Sans", Arial, sans-serif;
     font-size: 1.4rem;
     text-align: center;

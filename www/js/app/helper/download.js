@@ -38,6 +38,9 @@ define([
                     return false;
                 }
 
+                // сначала удаляем все что есть в базе
+                Regions.localStorage._clear();
+                Cities.localStorage._clear();
                 /**
                  * добавляем регионы в коллекцию
                  *
@@ -106,6 +109,7 @@ define([
                     return false;
                 }
 
+                Offices.localStorage._clear();
                 result.each(function (offices, key) {
                     _(offices).each(function (item) {
                         var params = _.extend({city: key}, item);
@@ -138,6 +142,7 @@ define([
                     return false;
                 }
 
+                Hospitals.localStorage._clear();
                 result.each(function (offices, key) {
                     _(offices).each(function (item) {
                         var params = _.extend({city: key}, item);

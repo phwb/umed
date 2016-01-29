@@ -109,6 +109,7 @@ define([
                     center: map.coords.value,
                     zoom: map.zoom
                 });
+                this.geoCollection = new ymaps.GeoObjectCollection();
             }.bind(this));
 
             this.city = params.city;
@@ -119,6 +120,7 @@ define([
 
             if (offices.length > 0) {
                 ymaps.ready(function () {
+                    this.geoCollection.removeAll();
                     _(offices).each(this.addItem, this);
                 }.bind(this));
             }
@@ -133,10 +135,15 @@ define([
                     iconImageHref: './img/location.svg',
                     iconImageSize: [40, 40]
                 });
-                this.map.geoObjects.add(placemark);
+
+                this.geoCollection.add(placemark);
+                this.map.geoObjects.add(this.geoCollection);
             }
         },
         setCenter: function (map, city) {
+            if (!map) {
+                return this;
+            }
             this.map.setCenter(map.coords.value, map.zoom);
 
             this.city = city;
@@ -144,7 +151,7 @@ define([
         }
     });
 
-    var objList = {};
+    var objectList = {};
     return function (params) {
         var collection = params.collection || false,
             callback = params.callback || function () {},
@@ -154,7 +161,7 @@ define([
             return callback('Не известная коллекция (collection) или уникальный идентификатор (uid)');
         }
 
-        if (!objList[uid]) {
+        if (!objectList[uid]) {
             var list = {}, map, pageView;
 
             pageView = new PageView({
@@ -218,6 +225,8 @@ define([
                         this.$name = this.$('.region-name');
                         this.$list = this.$('.list');
                         this.$map = this.$('.map');
+                        this.$tabs = this.$('.tabs__lst');
+
                         this.$name.text('Выберите регион');
                         // скрываем не нужные контролы
                         this.$map.hide();
@@ -281,6 +290,10 @@ define([
                             this.$name.text(name);
                         }
 
+                        // прячем или показываем кнопки выбора вида: список/карта
+                        // если у города нет координат центра карты
+                        this.$tabs[ !city.get('map') ? 'hide' : 'show' ]();
+
                         // если карта проинициализирована, то установим новый центр карты
                         if (map) {
                             map.setCenter(city.get('map'), id);
@@ -308,9 +321,9 @@ define([
                 }
             });
 
-            objList[uid] = pageView.init();
+            objectList[uid] = pageView.init();
         }
 
-        return callback(undefined, objList[uid]);
+        return callback(undefined, objectList[uid]);
     };
 });

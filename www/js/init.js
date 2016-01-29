@@ -1,6 +1,6 @@
 /* global require, $, StatusBar */
 require.config({
-    //urlArgs: "v=" + (new Date()).getTime(),
+    urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         store: {
             deps: ['backbone'],
@@ -19,7 +19,7 @@ require.config({
         store: 'libs/backbone.localstorage/backbone.localStorage',
         backboneForm: 'libs/backbone.form/backbone-forms',
         text: 'libs/require/text',
-        ymaps: 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&load=Map,Placemark',
+        ymaps: 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&load=Map,Placemark,GeoObjectCollection',
         // мои библиотеки
         page: 'libs/pages/page',
         // сокращения, чтоб постоянно не писать app
