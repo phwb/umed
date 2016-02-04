@@ -122,6 +122,8 @@ define([
                 ymaps.ready(function () {
                     this.geoCollection.removeAll();
                     _(offices).each(this.addItem, this);
+                    this.map.geoObjects.add(this.geoCollection);
+                    this.map.container.fitToViewport();
                 }.bind(this));
             }
         },
@@ -137,7 +139,6 @@ define([
                 });
 
                 this.geoCollection.add(placemark);
-                this.map.geoObjects.add(this.geoCollection);
             }
         },
         setCenter: function (map, city) {
