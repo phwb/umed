@@ -133,9 +133,9 @@ define([
 
             if (coords) {
                 placemark = new ymaps.Placemark(coords.value, {}, {
-                    iconLayout: 'default#image',
-                    iconImageHref: './img/location.svg',
-                    iconImageSize: [40, 40]
+                    //iconLayout: 'default#image',
+                    //iconImageHref: './img/location.svg',
+                    //iconImageSize: [40, 40]
                 });
 
                 this.geoCollection.add(placemark);
