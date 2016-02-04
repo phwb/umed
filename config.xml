@@ -2,6 +2,9 @@
 <!--
 id="com.ugraweb.u_med"
 это айдишник для Android'a так историчски сложилось
+
+id="ru.ugraweb.umed"
+это для айфона, он основной
 -->
 <widget xmlns="http://www.w3.org/ns/widgets" id="com.ugraweb.u_med" versionCode="105" version="1.0.5">
     <name>Югория-Мед</name>
