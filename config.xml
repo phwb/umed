@@ -33,6 +33,7 @@
     <preference name="ios-statusbarstyle" value="black-opaque" />   <!-- ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar -->
     <preference name="show-splash-screen-spinner" value="true" />   <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
     <preference name="auto-hide-splash-screen" value="true" />      <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
+    <preference name="DisallowOverscroll" value="true" />
     <!-- ios: status bar -->
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
