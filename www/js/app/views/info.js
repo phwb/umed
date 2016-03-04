@@ -2,11 +2,13 @@
 /* jshint multistr: true */
 define([
     'backbone',
+    'collections/infos',
     'text!templates/info/list.json',
     'views/page',
     'text!templates/info/index.html'
 ], function (
     Backbone,
+    info,
     json,
     PageView,
     template
@@ -14,20 +16,6 @@ define([
     'use strict';
 
     var list = JSON.parse(json);
-
-    /* --- Model --- */
-    var Info = Backbone.Model.extend({
-        defaults: {
-            name: '',
-            code: '',
-            sort: 100
-        }
-    });
-    /* --- Collection --- */
-    var InfoCollection = Backbone.Collection.extend({
-        model: Info
-    });
-    var info = new InfoCollection();
 
     /* --- View --- */
     var InfoItem = Backbone.View.extend({
@@ -38,7 +26,7 @@ define([
         },
         click: function (e) {
             e.preventDefault();
-            Backbone.Events.trigger('info:detail', this.model.get('code'));
+            Backbone.Events.trigger('info:detail', this.model.get('id'));
         },
         template: _.template('<span class="items-list__a"><%- name %></span>'),
         render: function () {
@@ -52,10 +40,14 @@ define([
         className: 'items-list__lst',
         initialize: function () {
             this.listenTo(info, 'add', this.addItem);
+            this.listenTo(info, 'reset', this.addAll);
         },
         addItem: function (item) {
             var info = new InfoItem({model: item});
             this.$el.append( info.render().el );
+        },
+        addAll: function () {
+            info.each(this.addItem, this);
         }
     });
 
@@ -69,12 +61,12 @@ define([
             init: function () {
                 this.$list = this.$('.items-list');
 
+                //this.listenTo()
+
                 var infoView = new InfoList();
                 this.$list.html( infoView.render().el );
 
-                _(list).each(function (item) {
-                    info.add(item);
-                });
+                info.fetch({reset: true});
             }
         },
         Toolbar: {

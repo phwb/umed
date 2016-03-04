@@ -99,10 +99,10 @@ define([
         });
     });
 
-    Backbone.Events.on('info:detail', function (code) {
+    Backbone.Events.on('info:detail', function (id) {
         require(['views/info-detail'], function (detail) {
             detail({
-                code: code,
+                id: id,
                 callback: function (err, view) {
                     if (err) {
                         notify.alert(err);

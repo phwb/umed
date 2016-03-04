@@ -1,60 +1,66 @@
-/* global define, require, $ */
+/* global define, _ */
 define([
     'backbone',
-    'app/helper/notify',
+    'collections/infos',
     'views/page',
-    'text!templates/info/detail.html'
+    'text!templates/info/detail.html',
+    'text!templates/info/detail-item.html'
 ], function (
     Backbone,
-    notify,
+    Infos,
     PageView,
+    detailPage,
     template
 ) {
     'use strict';
 
-    var details = {},
-        path = './static/#CODE#.html';
+    var $ = Backbone.$;
 
+    var DetailView = Backbone.View.extend({
+        className: 'article-detail',
+        template: _.template(template),
+        render: function () {
+            this.$el.html( this.template( this.model.toJSON() ) );
+            return this;
+        }
+    });
+
+    var details = {};
     /**
      * @params {Object} params
      * @property {String} params.code
      * @property {Function} params.code
      */
     return function (params) {
-        var code = params.code || '',
-            callback = params.callback || $.noop;
+        var id = params.id || '',
+            callback = params.callback || $.noop,
+            info;
 
-        if (!code) {
+        if (!id) {
             callback('Неизвестная страница');
             return this;
         }
 
-        if (!details[code]) {
+        info = Infos.get(id);
+        if (!info) {
+            callback('Статья не найдена, пожалуйста обновите информацию!');
+            return this;
+        }
+
+        if (!details[id]) {
             var page = new PageView({
-                html: template,
+                html: detailPage,
                 Navbar: {
-                    title: 'Информация'
+                    title: info.get('name')
                 },
                 Page: {
                     init: function () {
                         this.$page = this.$('.page-content');
-                        this.$page.addClass('page_loader');
-
-                        $.ajax({
-                            url: path.replace('#CODE#', code),
-                            type: 'GET',
-                            dataType: "html"
-                        })
-                            .done(this.done.bind(this))
-                            .fail(this.fail.bind(this));
                     },
-                    done: function (html) {
-                        this.$page.removeClass('page_loader');
-                        this.$page.html(html);
-                    },
-                    fail: function () {
-                        this.$page.removeClass('page_loader');
-                        notify.alert('Файл не найден');
+                    render: function () {
+                        var item = new DetailView({model: info});
+                        this.$page.html( item.render().el );
+                        return this;
                     }
                 },
                 Toolbar: {
@@ -62,9 +68,9 @@ define([
                 }
             });
 
-            details[code] = page.init();
+            details[id] = page.init();
         }
 
-        return callback(null, details[code]);
+        return callback(null, details[id]);
     };
 });

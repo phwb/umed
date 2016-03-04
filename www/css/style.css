@@ -246,3 +246,8 @@
     border-color: #f63c3c;
     border-top-color: #fff;
 }
+/* детальная страница "Информации" */
+.article-detail__c img {
+    vertical-align: bottom;
+    max-width: 100%;
+}

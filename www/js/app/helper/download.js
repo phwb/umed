@@ -6,7 +6,8 @@ define([
     'collections/regions',
     'collections/cities',
     'collections/offices',
-    'collections/hospitals'
+    'collections/hospitals',
+    'collections/infos'
 ], function (
     Backbone,
     notify,
@@ -14,7 +15,8 @@ define([
     Regions,
     Cities,
     Offices,
-    Hospitals
+    Hospitals,
+    Infos
 ) {
     'use strict';
 
@@ -150,8 +152,26 @@ define([
                     }, this);
                 });
 
-                return this;
+                return $.ajax({
+                    url: 'http://u-med.ru/local/api/info/',
+                    dataType: 'json'
+                });
             })
+            // информация
+            .then(function (data) {
+                var result = _(data);
+
+                if (result.isEmpty()) {
+                    return false;
+                }
+
+                Infos.localStorage._clear();
+                result.each(function (item) {
+                    var params = _.extend({}, item);
+                    Infos.create(params, {silent: true});
+                });
+            })
+            // все ОК, сохраняем в LS
             .then(function () {
                 splash.hide();
                 // создадим новую дату обновления и запищем в хранилице
@@ -166,7 +186,9 @@ define([
     }
 
     function checkResources(immediate) {
-        var splash = $('#splash');
+        var splash = $('#splash'),
+            needUpdate;
+
         // флаг обновления данных
         immediate = immediate || false;
 
@@ -178,8 +200,20 @@ define([
             return true;
         }
 
+        needUpdate = (function () {
+            var update = ls.getItem('update');
+            ls.setItem('update', 'N');
+            return !!(!update || update === 'Y');
+        } ());
+
         // читаем дату из хранилица
         expireDate = +ls.getItem('expire');
+
+        // если нужно обновить то просто сбросим дату последнего обновления
+        if (needUpdate) {
+            expireDate = false;
+        }
+
         if (!expireDate) {
             // если ее нет, то сразу грузим ресурсы
             downloadResources();
