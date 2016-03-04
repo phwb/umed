@@ -251,3 +251,22 @@
     vertical-align: bottom;
     max-width: 100%;
 }
+.article-detail li {
+    margin: 5px 0;
+}
+.article-detail ul {
+    margin: .8em 0;
+    padding-left: 2em;
+}
+.article-detail ol {
+    margin: .8em 0;
+    padding-left: 1.4em;
+}
+.article-detail ul ul {
+    margin: .4em 0;
+    padding-left: 1.4em;
+}
+.article-detail ol ol {
+    margin: .4em 0;
+    padding-left: 1.4em;
+}
