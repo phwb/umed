@@ -79,8 +79,8 @@ gulp.task('rjs', function () {
 });
 
 gulp.task('static', function () {
-    gulp.src(['./static/*']).pipe(gulp.dest(dist.root + 'static'));
-    gulp.src(['./upload/*']).pipe(gulp.dest(dist.root + 'upload'));
+    /*gulp.src(['./static/!*']).pipe(gulp.dest(dist.root + 'static'));
+    gulp.src(['./upload/!*']).pipe(gulp.dest(dist.root + 'upload'));*/
     gulp.src(['./img/*']).pipe(gulp.dest(dist.root + 'img'));
     gulp.src(['./index.html']).pipe(gulp.dest(dist.root));
     gulp.src(['./css/fonts/*']).pipe(gulp.dest(dist.root + 'css/fonts'));
