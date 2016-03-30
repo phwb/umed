@@ -120,10 +120,29 @@ define([
 
             if (offices.length > 0) {
                 ymaps.ready(function () {
-                    this.geoCollection.removeAll();
-                    _(offices).each(this.addItem, this);
-                    this.map.geoObjects.add(this.geoCollection);
-                    this.map.container.fitToViewport();
+                    var geoObjects = [],
+                        clusterer = new ymaps.Clusterer();
+
+                    _(offices).each(function (item) {
+                        var coords = item.get('coords'),
+                            placemark;
+
+                        if (coords) {
+                            placemark = new ymaps.Placemark(coords.value, {}, {
+                                //iconLayout: 'default#image',
+                                //iconImageHref: './img/location.svg',
+                                //iconImageSize: [40, 40]
+                            });
+
+                            geoObjects.push(placemark);
+                        }
+                    }, this);
+
+                    clusterer.add(geoObjects);
+
+                    this.map.geoObjects.removeAll();
+                    this.map.geoObjects.add(clusterer);
+                    // this.map.setBounds(clusterer.getBounds());
                 }.bind(this));
             }
         },
