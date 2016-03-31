@@ -3,6 +3,7 @@ define([
     'fastclick',
     'backbone',
     'page',
+    'swipe',
     'app/helper/notify',
     'app/helper/download',
     // главные вьюшки
@@ -12,6 +13,7 @@ define([
     FastClick,
     Backbone,
     page,
+    swipe,
     notify,
     checkResources,
     // главные вьюшки
@@ -32,6 +34,16 @@ define([
             $body.removeClass('with-panel');
         }
         e.preventDefault();
+    }).swipe({
+        swipeLeft: function () {
+            $('body').removeClass('with-panel');
+        }
+    });
+
+    $('.pages').swipe({
+        swipeRight: function () {
+            $('body').addClass('with-panel');
+        }
     });
 
     // page - вставляет в DOM страницы и анимирует их

@@ -19,6 +19,7 @@ require.config({
         store: 'libs/backbone.localstorage/backbone.localStorage',
         backboneForm: 'libs/backbone.form/backbone-forms',
         text: 'libs/require/text',
+        swipe: 'libs/touchSwipe/jquery.touchSwipe',
         ymaps: 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&load=Map,Placemark,GeoObjectCollection,Clusterer',
         // мои библиотеки
         page: 'libs/pages/page',
