@@ -2,10 +2,12 @@
 /* jshint multistr: true */
 define([
     'backbone',
-    'libs/pages/pages'
+    'libs/pages/pages',
+    'app/helper/notify'
 ], function (
     Backbone,
-    Pages
+    Pages,
+    notify
 ) {
     'use strict';
 
@@ -122,6 +124,16 @@ define([
             params;
 
         if (prevPage === undefined) {
+            notify.confirm({
+                message: 'Выйти из приложения?',
+                buttons: ['Нет', 'Да'],
+                title: 'Внимание!',
+                callback: function (index) {
+                    if (index > 1 || index === true) {
+                        navigator.app.exitApp();
+                    }
+                }
+            });
             return this;
         }
 

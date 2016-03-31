@@ -41,6 +41,11 @@ define([
         checkResources();
     });
 
+    document.addEventListener('backbutton', function (e) {
+        page.back();
+        e.preventDefault();
+    }, false);
+
     // роутером выступает собыитя бекбона
     // для навигации лучше бы использоваль бекбоновский router,
     // но я почему то решил использовать события
