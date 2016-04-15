@@ -1,5 +1,9 @@
 /* global define, $ */
-define(function () {
+define([
+    'jquery'
+], function (
+    $
+) {
     'use strict';
 
     function initDevice() {

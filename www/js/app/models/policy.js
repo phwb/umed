@@ -28,9 +28,9 @@ define([
                 title: 'Дата рождения'
             },
             enp: {
-                type: 'Number',
+                type: 'Text',
                 title: 'Единый номер полиса',
-                validators: ['required', 'number'],
+                validators: ['required'],
                 editorAttrs: {
                     placeholder: 'Указать'
                 }
