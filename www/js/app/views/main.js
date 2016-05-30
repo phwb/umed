@@ -33,6 +33,11 @@ define([
             "name": "Наши офисы",
             "icon": "offices",
             "action": "offices"
+        },
+        {
+            "name": "Личный кабинет застрахованного",
+            "icon": "lk",
+            "action": "lk"
         }
     ];
 
@@ -54,7 +59,10 @@ define([
             e.preventDefault();
         },
         render: function () {
-            this.$el.html( this.template( this.model.toJSON() ) );
+            var params = this.model.toJSON();
+            this.$el
+                .html( this.template( params ) )
+                .addClass('main-nav__i_' + params.icon);
             return this;
         }
     });

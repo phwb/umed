@@ -44,9 +44,13 @@ define([
             this.listenTo(Backbone.Events, 'back', this.setSelected);
         },
         setSelected: function (page) {
-            var model = this.find({action: page.prev});
+            var model = this.find({action: page.prev}),
+                selected;
             if (model) {
-                this.find({selected: true}).set({selected: false});
+                selected = this.find({selected: true});
+                if (selected) {
+                    selected.set({selected: false});
+                }
                 model.set({selected: true});
             }
         }

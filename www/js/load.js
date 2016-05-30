@@ -65,6 +65,12 @@ define([
         page.add(pageMain);
     });
 
+    Backbone.Events.on('action:lk', function () {
+        require(['views/lk'], function (pageLk) {
+            page.add(pageLk);
+        });
+    });
+
     Backbone.Events.on('action:policies', function () {
         require(['views/policies'], function (pagePolicies) {
             page.add(pagePolicies);
