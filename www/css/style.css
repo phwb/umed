@@ -279,3 +279,87 @@
 .main-nav__i_lk {
     width: 100%;
 }
+.clearfix:before, .clearfix:after {
+    display: table;
+    content: "";
+    clear: both;
+}
+.clearfix:after {
+    clear: both;
+}
+.button_square {
+    float: left;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    color: #25B0F9 !important;
+    background-color: #353e54;
+    position: relative;
+}
+.button_delete {
+    background: #f63c3c;
+    color: #fff !important;
+}
+.button_check {
+    margin-left: 120px;
+    padding: 0;
+}
+.card {
+    background: #fff;
+    border-radius: 5px;
+    max-width: 560px;
+    margin: 20px auto 0;
+    padding: 15px 20px;
+    font-size: 1rem;
+    min-width: 280px;
+    box-sizing: border-box;
+}
+.card__left {
+    float: left;
+    width: 70.53571428571429%;
+}
+.card__right {
+    float: right;
+    width: 29.46428571428571%;
+    text-align: right;
+}
+.card__line {
+    margin-top: 8px;
+}
+.card__line:first-child {
+    margin-top: 0;
+}
+.card__label {
+    color: #a1a6a8;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.card__value {
+    font-weight: bold;
+    color: #323638;
+    font-size: 1.3rem;
+}
+.card__value_enp {
+    color: #005aaa;
+}
+.card_enp {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+.card__number {
+    font-size: 2.2rem;
+    line-height: 1;
+    color: #323638;
+    font-weight: bold;
+    position: absolute;
+    left: 15px;
+    bottom: 20px;
+}
+.card-wrapper {
+    margin: 20px;
+}
+.card__image {
+    max-width: 100%;
+    vertical-align: bottom;
+}

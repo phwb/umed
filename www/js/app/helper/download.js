@@ -7,7 +7,8 @@ define([
     'collections/cities',
     'collections/offices',
     'collections/hospitals',
-    'collections/infos'
+    'collections/infos',
+    'collections/links'
 ], function (
     Backbone,
     notify,
@@ -16,7 +17,8 @@ define([
     Cities,
     Offices,
     Hospitals,
-    Infos
+    Infos,
+    Links
 ) {
     'use strict';
 
@@ -171,6 +173,51 @@ define([
                     Infos.create(params, {silent: true});
                 });
             })
+            // ссылки
+            .then(function () {
+                var dfd = $.Deferred();
+                var defaults = [
+                    {
+                        id: 1,
+                        name: "Ханты-Мансийский автономный округ",
+                        link: "https://esia.miacugra.ru/cas/login"
+                    },
+                    {
+                        id: 2,
+                        name: "Республика Башкортостан",
+                        link: "http://www.tfoms-rb.ru/ru/node/5064"
+                    }
+                ];
+                $.ajax({
+                    url: 'http://u-med.ru/local/api/links/',
+                    dataType: 'json',
+                    method: 'get'
+                })
+                    .done(function (data) {
+                        if (!data.length) {
+                            data = defaults;
+                        }
+                        dfd.resolve(data);
+                    })
+                    .fail(function () {
+                        dfd.resolve(defaults);
+                    });
+                return dfd;
+            })
+            // парсинг ссылок
+            .then(function (data) {
+                var result = _(data);
+
+                if (result.isEmpty()) {
+                    return false;
+                }
+
+                Links.localStorage._clear();
+                result.each(function (item) {
+                    var params = _.extend({}, item);
+                    Links.create(params, {silent: true});
+                });
+            })
             // все ОК, сохраняем в LS
             .then(function () {
                 splash.hide();
@@ -202,8 +249,8 @@ define([
 
         needUpdate = (function () {
             var update = ls.getItem('update');
-            ls.setItem('update', 'N');
-            return !!(!update || update === 'Y');
+            ls.setItem('update', 'Y');
+            return !!(!update || update === 'N');
         } ());
 
         // читаем дату из хранилица

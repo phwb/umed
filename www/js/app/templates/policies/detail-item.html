@@ -1,59 +1,47 @@
-<div class="data-list">
-    <ul class="data-list__lst">
-        <li class="data-list__i">
-            <div class="data-list__value data-list__value_zebra"><%- fio %></div>
-            <div class="data-list__label label">ФИО</div>
-        </li>
-        <li class="data-list__i">
-            <div class="data-list__value"><%- _.template.formatDate(birthday) %> г.</div>
-            <div class="data-list__label label">Дата рождения</div>
-        </li>
-        <li class="data-list__i">
-            <div class="data-list__value"><%
-                switch (sex) {
-                    case 'M': %>мужской<% break;
-                    case 'F': %>женский<% break;
-                }
-                %></div>
-            <div class="data-list__label label">Пол</div>
-        </li>
-        <li class="data-list__i">
-            <div class="data-list__value"><%- enp %></div>
-            <div class="data-list__label label">Единый номер полиса</div>
-        </li>
-        <% if (!!blank && blank.length) { %>
-        <li class="data-list__i">
-            <div class="data-list__value"><%- blank %></div>
-            <div class="data-list__label label">Номер бланка</div>
-        </li>
-        <% } else { %>
-        <li class="data-list__i">
-            <div class="data-list__value">&nbsp;</div>
-            <div class="data-list__label label">Номер бланка</div>
-        </li>
-        <% } %>
-        <% if (date) { %>
-        <li class="data-list__i">
-            <div class="data-list__value"><%- _.template.formatDate(date) %> г.</div>
-            <div class="data-list__label label">Срок действия</div>
-        </li>
-        <% } else { %>
-        <li class="data-list__i">
-            <div class="data-list__value">&nbsp;</div>
-            <div class="data-list__label label">Срок действия</div>
-        </li>
-        <% } %>
-    </ul>
+<div class="card card_enp">
+    <img src="./img/police-bg.png" class="card__image">
+    <div class="card__number"><%- enp %></div>
 </div>
-<div class="panel__controls controls">
-    <div class="controls__i control-button control-button_edit">
-        <svg class="control-button__icon">
-            <use xlink:href="#icon_edit"></use>
-        </svg>
+
+<div class="card">
+    <div class="clearfix">
+        <div class="card__left">
+            <div class="card__line">
+                <div class="card__label">ФИО</div>
+                <% var f = fio.trim().split(' ').join('<br>'); %>
+                <div class="card__value"><%= f %></div>
+            </div>
+        </div>
+        <div class="card__right">
+            <% if (obj.date) { %>
+            <div class="card__line">
+                <div class="card__label">СРОК ДЕЙСТВИЯ</div>
+                <div class="card__value"><%- _.template.formatDate(date, 'mm/yyyy') %></div>
+            </div>
+            <% } %>
+
+            <% if (obj.sex) { %>
+            <div class="card__line">
+                <div class="card__label">ПОЛ</div>
+                <div class="card__value"><%
+                    switch (sex) {
+                        case 'M': %>М<% break;
+                        case 'F': %>Ж<% break;
+                    }
+                %></div>
+            </div>
+            <% } %>
+
+            <% if (obj.birthday) { %>
+            <div class="card__line">
+                <div class="card__label">ДАТА РОЖДЕНИЯ</div>
+                <div class="card__value"><%- _.template.formatDate(birthday, 'dd.mm.yyyy') %></div>
+            </div>
+            <% } %>
+        </div>
     </div>
-    <div class="controls__i control-button control-button_delete">
-        <svg class="control-button__icon">
-            <use xlink:href="#icon_delete"></use>
-        </svg>
+    <div class="card__line">
+        <div class="card__label">ЕДИНЫЙ НОМЕР ПОЛИСА</div>
+        <div class="card__value card__value_enp"><%- enp %></div>
     </div>
 </div>

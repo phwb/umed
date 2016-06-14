@@ -40,6 +40,19 @@ define([
     Form.editors.Select.prototype.className = 'select';
     Form.Field.errorClassName = 'has-error';
 
+    // переопределили стандартное поведение на событие keyup
+    Form.editors.Text.prototype.events.keyup = function (e) {
+        var self = this;
+
+        if (e.keyCode === 13) {
+            self.$el.blur();
+        }
+
+        setTimeout(function() {
+            self.determineChange();
+        }, 0);
+    };
+
     Form.editors.Date.monthNames = 'Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь'.split(' ');
     Form.editors.Date.template = _.template('\
     <div>\

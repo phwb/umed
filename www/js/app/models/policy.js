@@ -49,13 +49,13 @@ define([
                     }
                 ]
             },
-            blank: {
+            /*blank: {
                 type: 'Text',
                 title: 'Номер бланка',
                 editorAttrs: {
                     placeholder: 'Указать'
                 }
-            },
+            },*/
             date: {
                 type: 'Date',
                 title: 'Срок действия, если есть'

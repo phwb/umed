@@ -16,18 +16,33 @@ define([
 ) {
     'use strict';
 
+    function leadingZero(num) {
+        return num > 10 ? num : '0' + num;
+    }
+
     var month = 'января февраля марта апреля мая июня июля августа сентября октября ноября декабря'.split(' ');
-    _.template.formatDate = function (stamp) {
+    _.template.formatDate = function (stamp, format) {
         var date = new Date(stamp),
             fragments = [
                 date.getDate(),
                 month[date.getMonth()],
                 date.getFullYear()
-            ];
-        return fragments.join(' ');
+            ],
+            result;
+
+        result = fragments.join(' ');
+        if (format) {
+            result = format
+                .replace(/dd/g, leadingZero(date.getDate()))
+                .replace(/mm/g, leadingZero(date.getMonth() + 1))
+                .replace(/yyyy/g, date.getFullYear());
+        }
+
+        return result;
     };
 
     var DetailView = Backbone.View.extend({
+        className: 'card-wrapper',
         template: _.template( detailItem ),
         initialize: function () {
             this.listenTo(this.model, 'change', this.change);
@@ -58,9 +73,20 @@ define([
             var pageView = new PageView({
                 html: detailPage,
                 Page: {
+                    init: function () {
+                        this.$item = this.$('.page-content');
+                    },
+                    render: function () {
+                        var item = new DetailView({model: policy});
+                        this.$item.html( item.render().el );
+                        return this;
+                    }
+                },
+                Toolbar: {
                     events: {
-                        'click .control-button_edit': 'edit',
-                        'click .control-button_delete': 'remove'
+                        'click .button_edit': 'edit',
+                        'click .button_delete': 'remove',
+                        'click .button_check': 'checkEnp'
                     },
                     edit: function (e) {
                         Backbone.Events.trigger('policies:add', policy.get('id'));
@@ -79,19 +105,6 @@ define([
                                 }
                             }
                         });
-                    },
-                    init: function () {
-                        this.$item = this.$('.detail');
-                    },
-                    render: function () {
-                        var item = new DetailView({model: policy});
-                        this.$item.html( item.render().el );
-                        return this;
-                    }
-                },
-                Toolbar: {
-                    events: {
-                        'click .button': 'checkEnp'
                     },
                     checkEnp: function (e) {
                         Backbone.Events.trigger('policies:check', policy.get('enp'));

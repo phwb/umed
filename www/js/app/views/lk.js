@@ -2,18 +2,16 @@
 /* jshint multistr: true */
 define([
     'backbone',
-    'text!templates/lk/list.json',
+    'collections/links',
     'views/page',
     'text!templates/lk/index.html'
 ], function (
     Backbone,
-    json,
+    links,
     PageView,
     template
 ) {
     'use strict';
-
-    var list = JSON.parse(json);
 
     /* --- View --- */
     var InfoItem = Backbone.View.extend({
@@ -21,7 +19,7 @@ define([
         className: 'items-list__i',
         template: _.template('<a href="<%= link %>" target="_system" class="items-list__a"><%= name %></a>'),
         render: function () {
-            this.$el.html( this.template( this.model ) );
+            this.$el.html( this.template( this.model.toJSON() ) );
             return this;
         }
     });
@@ -29,16 +27,16 @@ define([
     var InfoList = Backbone.View.extend({
         tagName: 'ul',
         className: 'items-list__lst',
+        initialize: function () {
+            this.listenTo(this.collection, 'add', this.addItem);
+            this.listenTo(this.collection, 'reset', this.addAll);
+        },
         addItem: function (item) {
-            var info = new InfoItem({model: item});
-            this.$el.append( info.render().el );
+            var link = new InfoItem({model: item});
+            this.$el.append( link.render().el );
         },
         addAll: function () {
-            this.collection.forEach(this.addItem, this);
-        },
-        render: function () {
-            this.addAll();
-            return this;
+            this.collection.each(this.addItem, this);
         }
     });
 
@@ -51,10 +49,12 @@ define([
         Page: {
             init: function () {
                 var infoView = new InfoList({
-                    collection: list
+                    collection: links
                 });
                 this.$list = this.$('.items-list');
                 this.$list.html( infoView.render().el );
+
+                links.fetch({reset: true});
             }
         },
         Toolbar: {

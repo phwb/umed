@@ -22,6 +22,8 @@ define([
 ) {
     'use strict';
 
+    var $body = $('body');
+
     // init FastClick
     /** @namespace document.body */
     FastClick.attach(document.body);
@@ -29,20 +31,22 @@ define([
     // рисуем левое меню
     $('.panel').html( menu.render().el );
     $('.panel-overlay').click(function (e) {
-        var $body = $('body');
         if ($body.hasClass('with-panel')) {
             $body.removeClass('with-panel');
         }
         e.preventDefault();
     }).swipe({
         swipeLeft: function () {
-            $('body').removeClass('with-panel');
+            $body.removeClass('with-panel');
         }
     });
 
     $('.pages').swipe({
-        swipeRight: function () {
-            $('body').addClass('with-panel');
+        swipeRight: function (e) {
+            var $target = $(e.target);
+            if ($target.closest('.map').length === 0) {
+                $body.addClass('with-panel');
+            }
         }
     });
 
