@@ -6,7 +6,7 @@ id="com.ugraweb.u_med"
 id="ru.ugraweb.umed"
 это для айфона, он основной
 -->
-<widget xmlns="http://www.w3.org/ns/widgets" id="ru.ugraweb.umed" versionCode="100070" version="1.0.7">
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.ugraweb.u_med" versionCode="100071" version="1.0.71">
     <name>Югория-Мед</name>
     <description>ОАО СМК Югория-Мед</description>
     <author email="ugraweb@gmail.com" href="http://ugraweb.ru">Ugraweb Team</author>
